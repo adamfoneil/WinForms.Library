@@ -1,0 +1,5 @@
+# WinForms.Library
+
+I started this because I needed to use my [DocumentManager](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/DocumentManager.cs) class from another project in my [Delivery](https://github.com/adamosoftware/Delivery) app, and I didn't want to duplicate it. I could've made this into a Nuget package, but I'm sort of committed to moving all new package development to .NET Standard, and I don't think WinForms is setup for that, although I could be wrong. (I know WinForms is coming to .NET Core 3.0 soon, which means .NET Standard compatibility, but I don't really have time to wait for that nor inclination to get into details of that now.)
+
+`DocumentManager` is a general-purpose save/open json single document interface handler using my [JsonSettings](https://github.com/adamosoftware/JsonSettings) project underneath. It displays file open and save dialogs, and can prompt to save a document when a form is closing -- stuff like that. It's not a data binding solution. You have to do data binding on controls separately.
