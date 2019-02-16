@@ -1,4 +1,5 @@
 ﻿using JsonSettings;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,8 @@ namespace WinForms.Library
 
 		private bool _isDirty = false;
 		private string _fileName;
+
+		public Action<JsonSerializerSettings> UpdateSerializerSettingsOnSave { get; set; }
 
 		public DocumentManager(string defaultExtension, string fileOpenFilter, string formClosingMessage)
 		{
@@ -152,7 +155,7 @@ namespace WinForms.Library
 
 		private async Task SaveInnerAsync()
 		{
-			await JsonFile.SaveAsync(Filename, Document);
+			await JsonFile.SaveAsync(Filename, Document, UpdateSerializerSettingsOnSave);
 			IsDirty = false;
 			FileSaved?.Invoke(this, new EventArgs());
 		}
