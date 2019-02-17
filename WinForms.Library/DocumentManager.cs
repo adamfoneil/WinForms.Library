@@ -19,6 +19,8 @@ namespace WinForms.Library
 		private bool _suspend = false;
 		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
 
+		public bool AutoSaveOnClose { get; set; } = true;
+
 		public event EventHandler FileOpened;
 
 		public event EventHandler FileSaved;
@@ -163,20 +165,27 @@ namespace WinForms.Library
 			{
 				if (IsDirty)
 				{
-					var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
-					switch (response)
+					if (AutoSaveOnClose)
 					{
-						case DialogResult.Yes:
-							e.Cancel = !await SaveAsync();
-							break;
+						e.Cancel = !await SaveAsync();
+					}
+					else
+					{
+						var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
+						switch (response)
+						{
+							case DialogResult.Yes:
+								e.Cancel = !await SaveAsync();
+								break;
 
-						case DialogResult.No: // close without saving	
-							e.Cancel = false;
-							break;
+							case DialogResult.No: // close without saving	
+								e.Cancel = false;
+								break;
 
-						case DialogResult.Cancel: // keep form open
-							e.Cancel = true;
-							break;
+							case DialogResult.Cancel: // keep form open
+								e.Cancel = true;
+								break;
+						}
 					}
 				}
 				else

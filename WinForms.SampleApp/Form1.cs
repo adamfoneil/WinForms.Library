@@ -21,6 +21,7 @@ namespace WinForms.SampleApp
 			_docManager.AddControl(tbFirstName, doc => doc.FirstName);
 			_docManager.AddControl(tbLastName, doc => doc.LastName);
 			_docManager.AddControl(chkIsActive, doc => doc.IsActive);
+			_docManager.AddControl(cbBelt, doc => doc.Belt);
 			_docManager.AddControl(builderTextBox1, doc => doc.BuilderText);
 		}
 

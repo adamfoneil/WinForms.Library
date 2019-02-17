@@ -41,6 +41,8 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.btnSave = new System.Windows.Forms.ToolStripButton();
 			this.builderTextBox1 = new App.Library.Controls.BuilderTextBox();
+			this.cbBelt = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -88,7 +90,7 @@
 			// 
 			// dateTimePicker1
 			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(85, 121);
+			this.dateTimePicker1.Location = new System.Drawing.Point(85, 160);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
 			this.dateTimePicker1.TabIndex = 5;
@@ -96,7 +98,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(46, 121);
+			this.label3.Location = new System.Drawing.Point(46, 160);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(33, 13);
 			this.label3.TabIndex = 6;
@@ -147,17 +149,38 @@
 			// builderTextBox1
 			// 
 			this.builderTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.builderTextBox1.Location = new System.Drawing.Point(85, 147);
+			this.builderTextBox1.Location = new System.Drawing.Point(85, 186);
 			this.builderTextBox1.Name = "builderTextBox1";
 			this.builderTextBox1.Size = new System.Drawing.Size(230, 26);
 			this.builderTextBox1.Suggestions = null;
 			this.builderTextBox1.TabIndex = 8;
+			this.builderTextBox1.Value = "";
+			// 
+			// cbBelt
+			// 
+			this.cbBelt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBelt.FormattingEnabled = true;
+			this.cbBelt.Location = new System.Drawing.Point(85, 121);
+			this.cbBelt.Name = "cbBelt";
+			this.cbBelt.Size = new System.Drawing.Size(230, 21);
+			this.cbBelt.TabIndex = 9;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(51, 124);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(28, 13);
+			this.label4.TabIndex = 10;
+			this.label4.Text = "Belt:";
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(549, 266);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.cbBelt);
 			this.Controls.Add(this.builderTextBox1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label3);
@@ -192,6 +215,8 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton btnSave;
 		private App.Library.Controls.BuilderTextBox builderTextBox1;
+		private System.Windows.Forms.ComboBox cbBelt;
+		private System.Windows.Forms.Label label4;
 	}
 }
 
