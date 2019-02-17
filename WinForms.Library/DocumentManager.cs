@@ -14,7 +14,7 @@ namespace WinForms.Library
 	/// Handles form commands and events related to saving, loading, and prompting,
 	/// but not a complete data binding solution
 	/// </summary>
-	internal class DocumentManager<TDocument> where TDocument : new()
+	public partial class DocumentManager<TDocument> where TDocument : new()
 	{
 		public event EventHandler FileOpened;
 
@@ -105,7 +105,15 @@ namespace WinForms.Library
 			}
 			
 			Filename = fileName;
+			SetControls(); 
 			FileOpened?.Invoke(this, new EventArgs());
+		}
+
+		private void SetControls()
+		{
+			_suspend = true;
+			foreach (var setter in _setControls) setter.Invoke(Document);
+			_suspend = false;			
 		}
 
 		private async Task<bool> SaveIfDirtyAsync()

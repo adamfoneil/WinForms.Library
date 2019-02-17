@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DocumentManager.cs" />
+    <Compile Include="DocumentManager_Controls.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />
     <Compile Include="Models\ComboBoxItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
