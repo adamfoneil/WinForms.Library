@@ -20,7 +20,7 @@ namespace WinForms.Library
 			{
 				if (_suspend) return;
 				setProperty.Invoke(Document);
-				_dirty = true;
+				IsDirty = true;
 			};
 		}
 
@@ -53,7 +53,7 @@ namespace WinForms.Library
 			{
 				if (_suspend) return;
 				setProperty.Invoke(Document);
-				_dirty = true;
+				IsDirty = true;
 			};
 		}
 
@@ -88,7 +88,7 @@ namespace WinForms.Library
 			{
 				if (_suspend) return;
 				setProperty.Invoke(Document);
-				_dirty = true;
+				IsDirty = true;
 			};
 		}
 
@@ -107,6 +107,41 @@ namespace WinForms.Library
 			};
 
 			AddControl<TEnum>(control, setProperty, setControl);
+		}
+
+		#endregion
+
+		#region DateTimePicker
+
+		public void AddControl(DateTimePicker control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		{
+			_setControls.Add(setControl);
+
+			control.ValueChanged += delegate (object sender, EventArgs e)
+			{
+				if (_suspend) return;
+				setProperty.Invoke(Document);
+				IsDirty = true;
+			};
+		}
+
+		public void AddControl(DateTimePicker control, Expression<Func<TDocument, DateTime>> property)
+		{
+			PropertyInfo pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				pi.SetValue(doc, control.Value);
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{
+				DateTime value = func.Invoke(doc);
+				if (value < DateTimePicker.MinimumDateTime) value = DateTimePicker.MinimumDateTime;
+				control.Value = value;
+			};
+
+			AddControl(control, setProperty, setControl);
 		}
 
 		#endregion

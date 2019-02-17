@@ -22,6 +22,7 @@ namespace WinForms.SampleApp
 			_docManager.AddControl(tbLastName, doc => doc.LastName);
 			_docManager.AddControl(chkIsActive, doc => doc.IsActive);
 			_docManager.AddControl(cbBelt, doc => doc.Belt);
+			_docManager.AddControl(dateTimePicker1, doc => doc.EffectiveDate);
 			_docManager.AddControl(builderTextBox1, doc => doc.BuilderText);
 		}
 
