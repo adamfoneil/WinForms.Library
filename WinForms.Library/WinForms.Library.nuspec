@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>WinForms.Library</id>
+    <version>$version$</version>
+    <title>WinForms.Library for Json documents</title>
+    <authors>Adam O'Neil</authors>
+    <owners>Adam O'Neil</owners>
+    <licenseUrl>https://github.com/adamosoftware/WinForms.Library/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/adamosoftware/WinForms.Library</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Control and data binding helpers for WinForm apps that interact with Json documents</description>    
+    <copyright>Copyright (c) Adam O'Neil 2019</copyright>
+    <tags>winforms</tags>
+	<dependencies>
+		<dependency id="JsonSettings.Library" version="1.0.12"/>
+	</dependencies>
+	<frameworkAssemblies>
+		<frameworkAssembly assemblyName="System.Windows.Forms"/>
+		<frameworkAssembly assemblyName="System.Drawing"/>		
+	</frameworkAssemblies>
+  </metadata>
+</package>
