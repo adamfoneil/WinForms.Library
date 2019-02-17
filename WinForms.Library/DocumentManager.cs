@@ -72,6 +72,7 @@ namespace WinForms.Library
 		public string DefaultExtension { get; }
 		public string FileDialogFilter { get; }
 		public string FormClosingMessage { get; }
+		public bool HasFilename { get { return !string.IsNullOrEmpty(Filename); } }
 
 		public async Task<bool> OpenAsync(string fileName)
 		{
@@ -147,7 +148,7 @@ namespace WinForms.Library
 
 		public async Task<bool> SaveAsync(string initialPath = null)
 		{
-			if (string.IsNullOrEmpty(Filename))
+			if (!HasFilename)
 			{				
 				return await PromptSaveAsync();				
 			}
@@ -158,9 +159,35 @@ namespace WinForms.Library
 
 		public async Task FormClosingAsync(FormClosingEventArgs e)
 		{
-			if (IsDirty && !await SaveAsync())
+			try
 			{
-				e.Cancel = (MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.OKCancel) == DialogResult.Cancel);
+				if (IsDirty)
+				{
+					var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
+					switch (response)
+					{
+						case DialogResult.Yes:
+							e.Cancel = !await SaveAsync();
+							break;
+
+						case DialogResult.No: // close without saving	
+							e.Cancel = false;
+							break;
+
+						case DialogResult.Cancel: // keep form open
+							e.Cancel = true;
+							break;
+					}
+				}
+				else
+				{
+					e.Cancel = !await SaveAsync();
+				}
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show($"There was an error saving the file: {exc.Message}");
+				e.Cancel = true;
 			}
 		}
 
