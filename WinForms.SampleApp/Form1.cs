@@ -20,6 +20,8 @@ namespace WinForms.SampleApp
 			_docManager.Document = new AppDocument();
 			_docManager.AddControl(tbFirstName, doc => doc.FirstName);
 			_docManager.AddControl(tbLastName, doc => doc.LastName);
+			_docManager.AddControl(chkIsActive, doc => doc.IsActive);
+			_docManager.AddControl(builderTextBox1, doc => doc.BuilderText);
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)

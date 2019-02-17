@@ -16,6 +16,9 @@ namespace WinForms.Library
 	/// </summary>
 	public partial class DocumentManager<TDocument> where TDocument : new()
 	{
+		private bool _suspend = false;
+		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
+
 		public event EventHandler FileOpened;
 
 		public event EventHandler FileSaved;
@@ -24,7 +27,7 @@ namespace WinForms.Library
 
 		public event EventHandler IsDirtyChanged;
 
-		private bool _isDirty = false;
+		private bool _dirty = false;
 		private string _fileName;
 
 		public Action<JsonSerializerSettings> UpdateSerializerSettingsOnSave { get; set; }
@@ -40,12 +43,12 @@ namespace WinForms.Library
 
 		public bool IsDirty
 		{
-			get { return _isDirty; }
+			get { return _dirty; }
 			set
 			{
-				if (_isDirty != value)
+				if (_dirty != value)
 				{
-					_isDirty = value;
+					_dirty = value;
 					IsDirtyChanged?.Invoke(this, new EventArgs());
 				}
 			}

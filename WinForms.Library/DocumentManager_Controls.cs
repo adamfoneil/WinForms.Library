@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
+using WinForms.Library.Interfaces;
 
 namespace WinForms.Library
 {
 	public partial class DocumentManager<TDocument>
 	{
-		private bool _suspend = false;
-		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
-
+		#region TextBox
 		public void AddControl(TextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
@@ -19,7 +18,7 @@ namespace WinForms.Library
 			{
 				if (_suspend) return;
 				setProperty.Invoke(Document);
-				_isDirty = true;
+				_dirty = true;
 			};
 		}
 
@@ -39,7 +38,69 @@ namespace WinForms.Library
 
 			AddControl(control, setProperty, setControl);
 		}
+		#endregion
 
+		#region CheckBox
+		public void AddControl(CheckBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		{
+			_setControls.Add(setControl);
+
+			control.CheckedChanged += delegate (object sender, EventArgs e)
+			{
+				if (_suspend) return;
+				setProperty.Invoke(Document);
+				_dirty = true;
+			};
+		}
+
+		public void AddControl(CheckBox control, Expression<Func<TDocument, bool>> property)
+		{
+			PropertyInfo pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				pi.SetValue(doc, control.Checked);
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{
+				control.Checked = func.Invoke(doc);
+			};
+
+			AddControl(control, setProperty, setControl);
+		}
+		#endregion
+
+		public void AddControl<TValue>(IBoundControl<TValue> control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		{
+			_setControls.Add(setControl);
+
+			control.ValueChanged += delegate (object sender, EventArgs e)
+			{
+				if (_suspend) return;
+				setProperty.Invoke(Document);
+				_dirty = true;
+			};
+		}
+
+		public void AddControl<TValue>(IBoundControl<TValue> control, Expression<Func<TDocument, TValue>> property)
+		{
+			PropertyInfo pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				pi.SetValue(doc, control.Value);
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{
+				control.Value = func.Invoke(doc);
+			};
+
+			AddControl(control, setProperty, setControl);
+		}
+
+		#region support methods
 		private PropertyInfo GetProperty<TValue>(Expression<Func<TDocument, TValue>> property)
 		{
 			string propName = PropertyNameFromLambda(property);
@@ -69,5 +130,6 @@ namespace WinForms.Library
 
 			return me.Member.Name;
 		}
+		#endregion
 	}
 }

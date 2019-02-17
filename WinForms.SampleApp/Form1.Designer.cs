@@ -40,6 +40,7 @@
 			this.btnNew = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.btnSave = new System.Windows.Forms.ToolStripButton();
+			this.builderTextBox1 = new App.Library.Controls.BuilderTextBox();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -143,11 +144,21 @@
 			this.btnSave.Text = "Save";
 			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
+			// builderTextBox1
+			// 
+			this.builderTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.builderTextBox1.Location = new System.Drawing.Point(85, 147);
+			this.builderTextBox1.Name = "builderTextBox1";
+			this.builderTextBox1.Size = new System.Drawing.Size(230, 26);
+			this.builderTextBox1.Suggestions = null;
+			this.builderTextBox1.TabIndex = 8;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(549, 202);
+			this.ClientSize = new System.Drawing.Size(549, 266);
+			this.Controls.Add(this.builderTextBox1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.dateTimePicker1);
@@ -180,6 +191,7 @@
 		private System.Windows.Forms.ToolStripButton btnNew;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton btnSave;
+		private App.Library.Controls.BuilderTextBox builderTextBox1;
 	}
 }
 
