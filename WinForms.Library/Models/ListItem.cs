@@ -1,8 +1,11 @@
 ﻿namespace WinForms.Library.Models
 {
-	public class ComboBoxItem<T>
+	/// <summary>
+	/// General purpose item for lists, used with BuilderTextBox Suggestions
+	/// </summary>	
+	public class ListItem<T>
 	{
-		public ComboBoxItem(T value, string text)
+		public ListItem(T value, string text)
 		{
 			Value = value;
 			Text = text;
@@ -18,7 +21,7 @@
 
 		public override bool Equals(object obj)
 		{
-			var test = obj as ComboBoxItem<T>;
+			var test = obj as ListItem<T>;
 			if (test != null)
 			{
 				return test.Value.Equals(Value);

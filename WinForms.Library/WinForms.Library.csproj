@@ -69,7 +69,8 @@
     <Compile Include="DocumentManager_Controls.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />
     <Compile Include="Interfaces\IBoundControl.cs" />
-    <Compile Include="Models\ComboBoxItem.cs" />
+    <Compile Include="Models\ListItem.cs" />
+    <Compile Include="Models\EnumValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,8 @@ namespace WinForms.SampleApp
 			_docManager.AddControl(cbBelt, doc => doc.Belt);
 			_docManager.AddControl(dateTimePicker1, doc => doc.EffectiveDate);
 			_docManager.AddControl(builderTextBox1, doc => doc.BuilderText);
+			_docManager.AddControl(numericUpDown1, doc => doc.Level);
+			_docManager.AddControl(cbItem, doc => doc.Item, AppDocument.SelectableItems);
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)

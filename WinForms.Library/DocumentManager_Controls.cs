@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
@@ -97,7 +98,7 @@ namespace WinForms.Library
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
 			{
-				pi.SetValue(doc, (control.SelectedItem as ComboBoxItem<TEnum>).Value);
+				pi.SetValue(doc, (control.SelectedItem as EnumValue<TEnum>).Value);
 			};
 
 			var func = property.Compile();
@@ -107,6 +108,37 @@ namespace WinForms.Library
 			};
 
 			AddControl<TEnum>(control, setProperty, setControl);
+		}
+
+		public void AddControl<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
+		{
+			PropertyInfo pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				pi.SetValue(doc, (control.SelectedItem as TItem));
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{
+				ComboBoxExtensions.SetItem(control, func.Invoke(doc));
+			};
+
+			AddControl(control, setProperty, setControl, items);
+		}
+
+		public void AddControl<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+		{
+			control.Fill(items);
+
+			_setControls.Add(setControl);
+
+			control.SelectedIndexChanged += delegate (object sender, EventArgs e)
+			{
+				if (_suspend) return;
+				setProperty.Invoke(Document);
+				IsDirty = true;
+			};
 		}
 
 		#endregion
@@ -139,6 +171,39 @@ namespace WinForms.Library
 				DateTime value = func.Invoke(doc);
 				if (value < DateTimePicker.MinimumDateTime) value = DateTimePicker.MinimumDateTime;
 				control.Value = value;
+			};
+
+			AddControl(control, setProperty, setControl);
+		}
+
+		#endregion
+
+		#region NumericUpDate
+
+		public void AddControl(NumericUpDown control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		{
+			_setControls.Add(setControl);
+
+			control.ValueChanged += delegate (object sender, EventArgs e)
+			{
+				if (_suspend) return;
+				setProperty.Invoke(Document);
+				IsDirty = true;
+			};
+		}
+
+		public void AddControl(NumericUpDown control, Expression<Func<TDocument, decimal>> property)
+		{
+			PropertyInfo pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				pi.SetValue(doc, control.Value);
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{				
+				control.Value = func.Invoke(doc);
 			};
 
 			AddControl(control, setProperty, setControl);

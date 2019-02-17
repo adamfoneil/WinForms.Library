@@ -12,7 +12,7 @@ namespace App.Library.Controls
 
 	public partial class BuilderTextBox : UserControl, IBoundControl<string>
 	{
-		private IEnumerable<ComboBoxItem<string>> _suggestions = null;
+		private IEnumerable<ListItem<string>> _suggestions = null;
 
 		public event BuilderEventHandler BuilderClicked;
 		public new event EventHandler TextChanged;
@@ -81,7 +81,7 @@ namespace App.Library.Controls
 			ValueChanged?.Invoke(textBox1, e);
 		}
 
-		public IEnumerable<ComboBoxItem<string>> Suggestions
+		public IEnumerable<ListItem<string>> Suggestions
 		{
 			get { return _suggestions; }
 			set
@@ -109,7 +109,7 @@ namespace App.Library.Controls
 
 	public class BuilderSuggestionMenuItem : ToolStripMenuItem
 	{
-		public BuilderSuggestionMenuItem(ComboBoxItem<string> comboBoxItem) 
+		public BuilderSuggestionMenuItem(ListItem<string> comboBoxItem) 
 		{
 			Text = comboBoxItem.Text;
 			Value = comboBoxItem.Value;
