@@ -14,6 +14,7 @@ namespace WinForms.Library
 		private bool _dirty = false;
 		private bool _suspend = false;
 		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
+		private List<Action> _clearControls = new List<Action>();
 
 		public TDocument Document { get; set; }
 
@@ -30,6 +31,14 @@ namespace WinForms.Library
 					IsDirtyChanged?.Invoke(this, new EventArgs());
 				}
 			}
+		}
+
+		public void ClearValues()
+		{
+			_suspend = true;
+			foreach (var action in _clearControls) action.Invoke();
+			_suspend = false;
+			IsDirty = false;
 		}
 
 		public void LoadValues()
@@ -112,6 +121,7 @@ namespace WinForms.Library
 		{
 			control.Fill<TEnum>();
 
+			_clearControls.Add(() => control.SelectedIndex = -1);
 			_setControls.Add(setControl);
 
 			control.SelectedIndexChanged += delegate (object sender, EventArgs e)
@@ -160,6 +170,7 @@ namespace WinForms.Library
 		{
 			control.Fill(items);
 
+			_clearControls.Add(() => control.SelectedIndex = -1);
 			_setControls.Add(setControl);
 
 			control.SelectedIndexChanged += delegate (object sender, EventArgs e)

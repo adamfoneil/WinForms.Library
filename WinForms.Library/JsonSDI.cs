@@ -190,6 +190,7 @@ namespace WinForms.Library
 
 			Filename = null;
 			Document = new TDocument();
+			Controls.ClearValues();
 			return true;
 		}
 	}
