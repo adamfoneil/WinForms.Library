@@ -53,7 +53,12 @@ namespace WinForms.Library
 			}
 		}
 
-		public TDocument Document { get; set; }
+		private TDocument _doc;
+		public TDocument Document
+		{
+			get { return _doc; }
+			set { _doc = value; Controls.Document = value; }
+		}
 
 		public string DefaultExtension { get; }
 		public string FileDialogFilter { get; }
