@@ -1,6 +1,19 @@
 Nuget package: **WinForms.Library**
 
-**Update 2/18/19** Package version 1.0.1. I renamed `DocumentManager` to `JsonSDI` to better reflect its intent. (SDI meaning Single Document Interface.) Also, I extracted its control binding features to a new class [ControlBinder](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/ControlBinder.cs). This is adapted in simplified form from something I wrote about on CodeProject.com [here](https://www.codeproject.com/Articles/1193797/Postulate-WinForms-a-new-look-at-data-binding).
+**Update 2/18/19** Package version 1.0.1. I renamed `DocumentManager` to `JsonSDI` to better reflect its intent. (SDI meaning Single Document Interface.) Also, I extracted its control binding features to a new class [ControlBinder](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/ControlBinder.cs). This is adapted in simplified form from something I wrote about on CodeProject.com [here](https://www.codeproject.com/Articles/1193797/Postulate-WinForms-a-new-look-at-data-binding). Here's what the [code pictured below](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.SampleApp/Form1.cs#L19) looks like now that it's been refactored some:
+
+```
+_docManager = new JsonSDI<AppDocument>(".json", "Json Files|*.json", "Save changes?");
+_docManager.Document = new AppDocument();
+_docManager.Controls.Add(tbFirstName, doc => doc.FirstName);
+_docManager.Controls.Add(tbLastName, doc => doc.LastName);
+_docManager.Controls.Add(chkIsActive, doc => doc.IsActive);
+_docManager.Controls.Add(cbBelt, doc => doc.Belt);
+_docManager.Controls.Add(dateTimePicker1, doc => doc.EffectiveDate);
+_docManager.Controls.Add(builderTextBox1, doc => doc.BuilderText);
+_docManager.Controls.Add(numericUpDown1, doc => doc.Level);
+_docManager.Controls.Add(cbItem, doc => doc.Item, AppDocument.SelectableItems);
+```
 
 **Update 2/17/19** Originally, I didn't think I was going to create a Nuget package for this, but I changed my mind because it was getting too big. I realized I needed a general-purpose data binding solution after all for [DocumentManager](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/DocumentManager.cs). Otherwise I would have custom data binding code in several places. I adapted some stuff I'd written a good while ago in [Postulate.WinForms](https://github.com/adamosoftware/Postulate.WinForms), simplifying and removing the ORM dependency.
 
