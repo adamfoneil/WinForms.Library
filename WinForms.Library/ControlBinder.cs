@@ -37,6 +37,7 @@ namespace WinForms.Library
 			_suspend = true;
 			foreach (var setter in _setControls) setter.Invoke(Document);
 			_suspend = false;
+			IsDirty = false;
 		}
 
 		#region TextBox

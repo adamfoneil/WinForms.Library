@@ -57,7 +57,7 @@ namespace WinForms.Library
 		public TDocument Document
 		{
 			get { return _doc; }
-			set { _doc = value; Controls.Document = value; }
+			set { _doc = value; Controls.Document = value; Controls.LoadValues(); }
 		}
 
 		public string DefaultExtension { get; }
@@ -100,7 +100,6 @@ namespace WinForms.Library
 			}
 
 			Filename = fileName;
-			Controls.LoadValues();
 			FileOpened?.Invoke(this, new EventArgs());
 		}
 
@@ -170,10 +169,6 @@ namespace WinForms.Library
 						}
 					}
 				}
-				else
-				{
-					e.Cancel = !await SaveAsync();
-				}
 			}
 			catch (Exception exc)
 			{
@@ -195,8 +190,6 @@ namespace WinForms.Library
 
 			Filename = null;
 			Document = new TDocument();
-			Controls.Document = Document;
-			Controls.IsDirty = false;
 			return true;
 		}
 	}
