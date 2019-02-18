@@ -9,8 +9,36 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
-	public partial class JsonSDI<TDocument>
+	public class FormBinder<TDocument>
 	{
+		private bool _dirty = false;
+		private bool _suspend = false;
+		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
+
+		public TDocument Document { get; set; }
+
+		public event EventHandler IsDirtyChanged;
+
+		public bool IsDirty
+		{
+			get { return _dirty; }
+			set
+			{
+				if (_dirty != value)
+				{
+					_dirty = value;
+					IsDirtyChanged?.Invoke(this, new EventArgs());
+				}
+			}
+		}
+
+		public void SetControls()
+		{
+			_suspend = true;
+			foreach (var setter in _setControls) setter.Invoke(Document);
+			_suspend = false;
+		}
+
 		#region TextBox
 
 		public void AddControl(TextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
@@ -221,7 +249,7 @@ namespace WinForms.Library
 			{
 				if (_suspend) return;
 				setProperty.Invoke(Document);
-				_dirty = true;
+				IsDirty = true;
 			};
 		}
 

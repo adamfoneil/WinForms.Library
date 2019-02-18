@@ -11,13 +11,12 @@ namespace WinForms.Library
 	public delegate Task<TDocument> DocumentLoadHandler<TDocument>(string fileName);
 
 	/// <summary>
-	/// Json Single Document Interface - handles form commands and events 
-	/// related to saving, loading, and prompting json documents	
+	/// Json Single Document Interface - handles form commands and events
+	/// related to saving, loading, and prompting json documents
 	/// </summary>
 	public partial class JsonSDI<TDocument> where TDocument : new()
 	{
-		private bool _suspend = false;
-		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
+		private FormBinder<TDocument> _binder = null;
 
 		public bool AutoSaveOnClose { get; set; } = true;
 
@@ -27,9 +26,6 @@ namespace WinForms.Library
 
 		public event EventHandler FilenameChanged;
 
-		public event EventHandler IsDirtyChanged;
-
-		private bool _dirty = false;
 		private string _fileName;
 
 		public Action<JsonSerializerSettings> UpdateSerializerSettingsOnSave { get; set; }
@@ -39,22 +35,10 @@ namespace WinForms.Library
 			DefaultExtension = defaultExtension;
 			FileDialogFilter = fileOpenFilter;
 			FormClosingMessage = formClosingMessage;
+			_binder = new FormBinder<TDocument>();
 		}
 
 		public Dictionary<string, DocumentLoadHandler<TDocument>> FileHandlers { get; } = new Dictionary<string, DocumentLoadHandler<TDocument>>();
-
-		public bool IsDirty
-		{
-			get { return _dirty; }
-			set
-			{
-				if (_dirty != value)
-				{
-					_dirty = value;
-					IsDirtyChanged?.Invoke(this, new EventArgs());
-				}
-			}
-		}
 
 		public string Filename
 		{
@@ -109,24 +93,17 @@ namespace WinForms.Library
 			{
 				Document = await JsonFile.LoadAsync<TDocument>(fileName);
 			}
-			
-			Filename = fileName;
-			SetControls(); 
-			FileOpened?.Invoke(this, new EventArgs());
-		}
 
-		private void SetControls()
-		{
-			_suspend = true;
-			foreach (var setter in _setControls) setter.Invoke(Document);
-			_suspend = false;			
+			Filename = fileName;
+			_binder.SetControls();
+			FileOpened?.Invoke(this, new EventArgs());
 		}
 
 		private async Task<bool> SaveIfDirtyAsync()
 		{
 			// this is a single document interface, so opening or newing a doc
 			// requires taking care of the current doc before continuing
-			if (IsDirty) return await SaveAsync();
+			if (_binder.IsDirty) return await SaveAsync();
 
 			return true;
 		}
@@ -151,8 +128,8 @@ namespace WinForms.Library
 		public async Task<bool> SaveAsync(string initialPath = null)
 		{
 			if (!HasFilename)
-			{				
-				return await PromptSaveAsync();				
+			{
+				return await PromptSaveAsync();
 			}
 
 			await SaveInnerAsync();
@@ -163,7 +140,7 @@ namespace WinForms.Library
 		{
 			try
 			{
-				if (IsDirty)
+				if (_binder.IsDirty)
 				{
 					if (AutoSaveOnClose)
 					{
@@ -178,7 +155,7 @@ namespace WinForms.Library
 								e.Cancel = !await SaveAsync();
 								break;
 
-							case DialogResult.No: // close without saving	
+							case DialogResult.No: // close without saving
 								e.Cancel = false;
 								break;
 
@@ -203,7 +180,7 @@ namespace WinForms.Library
 		private async Task SaveInnerAsync()
 		{
 			await JsonFile.SaveAsync(Filename, Document, UpdateSerializerSettingsOnSave);
-			IsDirty = false;
+			_binder.IsDirty = false;
 			FileSaved?.Invoke(this, new EventArgs());
 		}
 
@@ -211,9 +188,10 @@ namespace WinForms.Library
 		{
 			if (!await SaveIfDirtyAsync()) return false;
 
-			IsDirty = false;
 			Filename = null;
 			Document = new TDocument();
+			_binder.Document = Document;
+			_binder.IsDirty = false;
 			return true;
 		}
 	}
