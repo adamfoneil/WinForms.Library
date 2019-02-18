@@ -65,7 +65,7 @@
     <Compile Include="Controls\WebUrlLinkLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DocumentManager.cs" />
+    <Compile Include="JsonSDI.cs" />
     <Compile Include="DocumentManager_Controls.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />
     <Compile Include="Interfaces\IBoundControl.cs" />

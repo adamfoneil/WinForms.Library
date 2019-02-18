@@ -9,7 +9,7 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
-	public partial class DocumentManager<TDocument>
+	public partial class JsonSDI<TDocument>
 	{
 		#region TextBox
 

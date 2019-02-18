@@ -11,10 +11,10 @@ namespace WinForms.Library
 	public delegate Task<TDocument> DocumentLoadHandler<TDocument>(string fileName);
 
 	/// <summary>
-	/// Handles form commands and events related to saving, loading, and prompting,
-	/// but not a complete data binding solution
+	/// Json Single Document Interface - handles form commands and events 
+	/// related to saving, loading, and prompting json documents	
 	/// </summary>
-	public partial class DocumentManager<TDocument> where TDocument : new()
+	public partial class JsonSDI<TDocument> where TDocument : new()
 	{
 		private bool _suspend = false;
 		private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
@@ -34,7 +34,7 @@ namespace WinForms.Library
 
 		public Action<JsonSerializerSettings> UpdateSerializerSettingsOnSave { get; set; }
 
-		public DocumentManager(string defaultExtension, string fileOpenFilter, string formClosingMessage)
+		public JsonSDI(string defaultExtension, string fileOpenFilter, string formClosingMessage)
 		{
 			DefaultExtension = defaultExtension;
 			FileDialogFilter = fileOpenFilter;

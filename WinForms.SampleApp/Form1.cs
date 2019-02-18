@@ -7,7 +7,7 @@ namespace WinForms.SampleApp
 {
 	public partial class Form1 : Form
 	{
-		private DocumentManager<AppDocument> _docManager = null;
+		private JsonSDI<AppDocument> _docManager = null;
 
 		public Form1()
 		{
@@ -16,7 +16,7 @@ namespace WinForms.SampleApp
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			_docManager = new DocumentManager<AppDocument>(".json", "Json Files|*.json", "Save changes?");
+			_docManager = new JsonSDI<AppDocument>(".json", "Json Files|*.json", "Save changes?");
 			_docManager.Document = new AppDocument();
 			_docManager.AddControl(tbFirstName, doc => doc.FirstName);
 			_docManager.AddControl(tbLastName, doc => doc.LastName);
