@@ -1,5 +1,7 @@
 Nuget package: **WinForms.Library**
 
+**Update 2/18/19** Package version 1.0.1. I renamed `DocumentManager` to `JsonSDI` to better reflect its intent. (SDI meaning Single Document Interface.) Also, I extracted its control binding features to a new class [ControlBinder](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/ControlBinder.cs). This is adapted in simplified form from something I wrote about on CodeProject.com [here](https://www.codeproject.com/Articles/1193797/Postulate-WinForms-a-new-look-at-data-binding).
+
 **Update 2/17/19** Originally, I didn't think I was going to create a Nuget package for this, but I changed my mind because it was getting too big. I realized I needed a general-purpose data binding solution after all for [DocumentManager](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/DocumentManager.cs). Otherwise I would have custom data binding code in several places. I adapted some stuff I'd written a good while ago in [Postulate.WinForms](https://github.com/adamosoftware/Postulate.WinForms), simplifying and removing the ORM dependency.
 
 To see an example of the data binding in use, see [Form1](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.SampleApp/Form1.cs#L21) from the Sample App in this repo. This is just a dummy form that demonstrates several binding features you can use with `DocumentManager`.
