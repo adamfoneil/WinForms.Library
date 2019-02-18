@@ -66,7 +66,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="JsonSDI.cs" />
-    <Compile Include="FormBinder.cs" />
+    <Compile Include="ControlBinder.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />
     <Compile Include="Interfaces\IBoundControl.cs" />
     <Compile Include="Models\ListItem.cs" />

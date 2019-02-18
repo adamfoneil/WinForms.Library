@@ -14,10 +14,8 @@ namespace WinForms.Library
 	/// Json Single Document Interface - handles form commands and events
 	/// related to saving, loading, and prompting json documents
 	/// </summary>
-	public partial class JsonSDI<TDocument> where TDocument : new()
+	public class JsonSDI<TDocument> where TDocument : new()
 	{
-		private FormBinder<TDocument> _binder = null;
-
 		public bool AutoSaveOnClose { get; set; } = true;
 
 		public event EventHandler FileOpened;
@@ -35,8 +33,10 @@ namespace WinForms.Library
 			DefaultExtension = defaultExtension;
 			FileDialogFilter = fileOpenFilter;
 			FormClosingMessage = formClosingMessage;
-			_binder = new FormBinder<TDocument>();
+			Controls = new ControlBinder<TDocument>();
 		}
+
+		public ControlBinder<TDocument> Controls { get; } = null;
 
 		public Dictionary<string, DocumentLoadHandler<TDocument>> FileHandlers { get; } = new Dictionary<string, DocumentLoadHandler<TDocument>>();
 
@@ -95,7 +95,7 @@ namespace WinForms.Library
 			}
 
 			Filename = fileName;
-			_binder.SetControls();
+			Controls.LoadValues();
 			FileOpened?.Invoke(this, new EventArgs());
 		}
 
@@ -103,7 +103,7 @@ namespace WinForms.Library
 		{
 			// this is a single document interface, so opening or newing a doc
 			// requires taking care of the current doc before continuing
-			if (_binder.IsDirty) return await SaveAsync();
+			if (Controls.IsDirty) return await SaveAsync();
 
 			return true;
 		}
@@ -140,7 +140,7 @@ namespace WinForms.Library
 		{
 			try
 			{
-				if (_binder.IsDirty)
+				if (Controls.IsDirty)
 				{
 					if (AutoSaveOnClose)
 					{
@@ -180,7 +180,7 @@ namespace WinForms.Library
 		private async Task SaveInnerAsync()
 		{
 			await JsonFile.SaveAsync(Filename, Document, UpdateSerializerSettingsOnSave);
-			_binder.IsDirty = false;
+			Controls.IsDirty = false;
 			FileSaved?.Invoke(this, new EventArgs());
 		}
 
@@ -190,8 +190,8 @@ namespace WinForms.Library
 
 			Filename = null;
 			Document = new TDocument();
-			_binder.Document = Document;
-			_binder.IsDirty = false;
+			Controls.Document = Document;
+			Controls.IsDirty = false;
 			return true;
 		}
 	}

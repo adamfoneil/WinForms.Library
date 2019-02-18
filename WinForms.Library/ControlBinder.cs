@@ -9,7 +9,7 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
-	public class FormBinder<TDocument>
+	public class ControlBinder<TDocument>
 	{
 		private bool _dirty = false;
 		private bool _suspend = false;
@@ -32,7 +32,7 @@ namespace WinForms.Library
 			}
 		}
 
-		public void SetControls()
+		public void LoadValues()
 		{
 			_suspend = true;
 			foreach (var setter in _setControls) setter.Invoke(Document);
@@ -41,7 +41,7 @@ namespace WinForms.Library
 
 		#region TextBox
 
-		public void AddControl(TextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add(TextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
 
@@ -53,7 +53,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl(TextBox control, Expression<Func<TDocument, object>> property)
+		public void Add(TextBox control, Expression<Func<TDocument, object>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -67,14 +67,14 @@ namespace WinForms.Library
 				control.Text = func.Invoke(doc)?.ToString();
 			};
 
-			AddControl(control, setProperty, setControl);
+			Add(control, setProperty, setControl);
 		}
 
 		#endregion TextBox
 
 		#region CheckBox
 
-		public void AddControl(CheckBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add(CheckBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
 
@@ -86,7 +86,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl(CheckBox control, Expression<Func<TDocument, bool>> property)
+		public void Add(CheckBox control, Expression<Func<TDocument, bool>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -100,14 +100,14 @@ namespace WinForms.Library
 				control.Checked = func.Invoke(doc);
 			};
 
-			AddControl(control, setProperty, setControl);
+			Add(control, setProperty, setControl);
 		}
 
 		#endregion CheckBox
 
 		#region ComboBox
 
-		public void AddControl<TEnum>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add<TEnum>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			control.Fill<TEnum>();
 
@@ -121,7 +121,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl<TEnum>(ComboBox control, Expression<Func<TDocument, TEnum>> property)
+		public void Add<TEnum>(ComboBox control, Expression<Func<TDocument, TEnum>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -135,10 +135,10 @@ namespace WinForms.Library
 				ComboBoxExtensions.SetValue(control, func.Invoke(doc));
 			};
 
-			AddControl<TEnum>(control, setProperty, setControl);
+			Add<TEnum>(control, setProperty, setControl);
 		}
 
-		public void AddControl<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
+		public void Add<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -152,10 +152,10 @@ namespace WinForms.Library
 				ComboBoxExtensions.SetItem(control, func.Invoke(doc));
 			};
 
-			AddControl(control, setProperty, setControl, items);
+			Add(control, setProperty, setControl, items);
 		}
 
-		public void AddControl<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+		public void Add<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
 		{
 			control.Fill(items);
 
@@ -173,7 +173,7 @@ namespace WinForms.Library
 
 		#region DateTimePicker
 
-		public void AddControl(DateTimePicker control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add(DateTimePicker control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
 
@@ -185,7 +185,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl(DateTimePicker control, Expression<Func<TDocument, DateTime>> property)
+		public void Add(DateTimePicker control, Expression<Func<TDocument, DateTime>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -201,14 +201,14 @@ namespace WinForms.Library
 				control.Value = value;
 			};
 
-			AddControl(control, setProperty, setControl);
+			Add(control, setProperty, setControl);
 		}
 
 		#endregion
 
 		#region NumericUpDate
 
-		public void AddControl(NumericUpDown control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add(NumericUpDown control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
 
@@ -220,7 +220,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl(NumericUpDown control, Expression<Func<TDocument, decimal>> property)
+		public void Add(NumericUpDown control, Expression<Func<TDocument, decimal>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -234,14 +234,14 @@ namespace WinForms.Library
 				control.Value = func.Invoke(doc);
 			};
 
-			AddControl(control, setProperty, setControl);
+			Add(control, setProperty, setControl);
 		}
 
 		#endregion
 
 		#region IBoundControl
 
-		public void AddControl<TValue>(IBoundControl<TValue> control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void Add<TValue>(IBoundControl<TValue> control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			_setControls.Add(setControl);
 
@@ -253,7 +253,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void AddControl<TValue>(IBoundControl<TValue> control, Expression<Func<TDocument, TValue>> property)
+		public void Add<TValue>(IBoundControl<TValue> control, Expression<Func<TDocument, TValue>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -267,7 +267,7 @@ namespace WinForms.Library
 				control.Value = func.Invoke(doc);
 			};
 
-			AddControl(control, setProperty, setControl);
+			Add(control, setProperty, setControl);
 		}
 
 		#endregion IBoundControl
