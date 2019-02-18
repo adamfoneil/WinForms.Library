@@ -18,14 +18,14 @@ namespace WinForms.SampleApp
 		{
 			_docManager = new JsonSDI<AppDocument>(".json", "Json Files|*.json", "Save changes?");
 			_docManager.Document = new AppDocument();
-			_docManager.AddControl(tbFirstName, doc => doc.FirstName);
-			_docManager.AddControl(tbLastName, doc => doc.LastName);
-			_docManager.AddControl(chkIsActive, doc => doc.IsActive);
-			_docManager.AddControl(cbBelt, doc => doc.Belt);
-			_docManager.AddControl(dateTimePicker1, doc => doc.EffectiveDate);
-			_docManager.AddControl(builderTextBox1, doc => doc.BuilderText);
-			_docManager.AddControl(numericUpDown1, doc => doc.Level);
-			_docManager.AddControl(cbItem, doc => doc.Item, AppDocument.SelectableItems);
+			_docManager.Controls.Add(tbFirstName, doc => doc.FirstName);
+			_docManager.Controls.Add(tbLastName, doc => doc.LastName);
+			_docManager.Controls.Add(chkIsActive, doc => doc.IsActive);
+			_docManager.Controls.Add(cbBelt, doc => doc.Belt);
+			_docManager.Controls.Add(dateTimePicker1, doc => doc.EffectiveDate);
+			_docManager.Controls.Add(builderTextBox1, doc => doc.BuilderText);
+			_docManager.Controls.Add(numericUpDown1, doc => doc.Level);
+			_docManager.Controls.Add(cbItem, doc => doc.Item, AppDocument.SelectableItems);
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)
