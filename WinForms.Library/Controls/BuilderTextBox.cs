@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using WinForms.Library.Interfaces;
 using WinForms.Library.Models;
 
-namespace App.Library.Controls
+namespace WinForms.Library.Controls
 {
 	public delegate void BuilderEventHandler(object sender, BuilderEventArgs e);
 

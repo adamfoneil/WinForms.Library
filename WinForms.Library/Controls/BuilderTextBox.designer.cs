@@ -1,4 +1,4 @@
-﻿namespace App.Library.Controls
+﻿namespace WinForms.Library.Controls
 {
 	partial class BuilderTextBox
 	{
