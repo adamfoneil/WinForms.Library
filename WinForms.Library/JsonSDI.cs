@@ -38,7 +38,7 @@ namespace WinForms.Library
 
 		public ControlBinder<TDocument> Controls { get; } = null;
 
-		public Dictionary<string, Func<string>> FileHandlers { get; } = new Dictionary<string, Func<string>>();
+		public Dictionary<string, Func<string, string>> FileHandlers { get; } = new Dictionary<string, Func<string, string>>();
 
 		public string Filename
 		{
@@ -94,7 +94,7 @@ namespace WinForms.Library
 			string openFile = fileName;
 			if (FileHandlers.ContainsKey(ext))
 			{
-				openFile = FileHandlers[ext].Invoke();
+				openFile = FileHandlers[ext].Invoke(fileName);
 			}			
 			
 			Document = await JsonFile.LoadAsync<TDocument>(openFile);
