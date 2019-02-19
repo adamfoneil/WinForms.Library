@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace WinForms.Library.Controls
 {
-	internal delegate void FileSelectedHandler(string fileName);
+	public delegate void FileSelectedHandler(string fileName);
 
-	internal class OpenFileButton : ToolStripButton
+	public class OpenFileButton : ToolStripButton
 	{
 		public event FileSelectedHandler FileSelected;
 
