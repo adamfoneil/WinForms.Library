@@ -61,5 +61,17 @@ namespace WinForms.Library.Extensions
 				index++;
 			}
 		}
+
+		public static TEnum GetValue<TEnum>(this ComboBox comboBox)
+		{
+			var value = comboBox.SelectedItem as EnumValue<TEnum>;
+			return (value != null) ? value.Value : default(TEnum);
+		}
+
+		public static TItem GetItem<TItem>(this ComboBox comboBox) where TItem : class
+		{
+			var value = comboBox.SelectedItem as TItem;
+			return (value != null) ? value : default(TItem);
+		}
 	}
 }
