@@ -44,7 +44,7 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			this.label5 = new System.Windows.Forms.Label();
-			this.builderTextBox1 = new App.Library.Controls.BuilderTextBox();
+			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
 			this.cbItem = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.toolStrip1.SuspendLayout();
