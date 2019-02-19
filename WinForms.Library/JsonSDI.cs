@@ -146,27 +146,20 @@ namespace WinForms.Library
 			{
 				if (Controls.IsDirty)
 				{
-					if (AutoSaveOnClose)
+					var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
+					switch (response)
 					{
-						e.Cancel = !await SaveAsync();
-					}
-					else
-					{
-						var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
-						switch (response)
-						{
-							case DialogResult.Yes:
-								e.Cancel = !await SaveAsync();
-								break;
+						case DialogResult.Yes:
+							e.Cancel = !await SaveAsync();
+							break;
 
-							case DialogResult.No: // close without saving
-								e.Cancel = false;
-								break;
+						case DialogResult.No: // close without saving
+							e.Cancel = false;
+							break;
 
-							case DialogResult.Cancel: // keep form open
-								e.Cancel = true;
-								break;
-						}
+						case DialogResult.Cancel: // keep form open
+							e.Cancel = true;
+							break;
 					}
 				}
 			}
