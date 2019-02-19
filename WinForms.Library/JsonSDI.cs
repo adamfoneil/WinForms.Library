@@ -16,8 +16,6 @@ namespace WinForms.Library
 	/// </summary>
 	public class JsonSDI<TDocument> where TDocument : new()
 	{
-		public bool AutoSaveOnClose { get; set; } = true;
-
 		public event EventHandler FileOpened;
 
 		public event EventHandler FileSaved;
@@ -102,15 +100,33 @@ namespace WinForms.Library
 			}			
 			
 			Document = await JsonFile.LoadAsync<TDocument>(openFile);
-			Filename = fileName;
+			Filename = openFile;
 			FileOpened?.Invoke(this, new EventArgs());
 		}
 
+		/// <summary>
+		/// Returns true if 
+		/// - document is unchanged, 
+		/// - document has changes and user wants to save,
+		/// - user discards changes
+		/// </summary>		
 		private async Task<bool> SaveIfDirtyAsync()
 		{
 			// this is a single document interface, so opening or newing a doc
 			// requires taking care of the current doc before continuing
-			if (Controls.IsDirty) return await SaveAsync();
+			if (Controls.IsDirty)
+			{
+				var response = PromptClosing();
+				if (response == DialogResult.Yes)
+				{
+					return await SaveAsync();
+				}
+				else
+				{
+					// if user clicks No, it means we discard changes
+					return (response == DialogResult.No);
+				}
+			}
 
 			return true;
 		}
@@ -149,7 +165,7 @@ namespace WinForms.Library
 			{
 				if (Controls.IsDirty)
 				{
-					var response = MessageBox.Show(FormClosingMessage, "Form Closing", MessageBoxButtons.YesNoCancel);
+					var response = PromptClosing();
 					switch (response)
 					{
 						case DialogResult.Yes:
@@ -171,6 +187,11 @@ namespace WinForms.Library
 				MessageBox.Show($"There was an error saving the file: {exc.Message}");
 				e.Cancel = true;
 			}
+		}
+
+		private DialogResult PromptClosing()
+		{
+			return MessageBox.Show(FormClosingMessage, "Unsaved Changes", MessageBoxButtons.YesNoCancel);
 		}
 
 		private async Task SaveInnerAsync()
