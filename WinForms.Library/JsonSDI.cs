@@ -38,6 +38,10 @@ namespace WinForms.Library
 
 		public ControlBinder<TDocument> Controls { get; } = null;
 
+		/// <summary>
+		/// Use this to open a different file than what was selected in File Open dialog based on extension.
+		/// This is used in SMM to open an .smm file from a given .sln
+		/// </summary>
 		public Dictionary<string, Func<string, string>> FileHandlers { get; } = new Dictionary<string, Func<string, string>>();
 
 		public string Filename
