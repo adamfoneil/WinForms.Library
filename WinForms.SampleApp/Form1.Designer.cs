@@ -258,7 +258,7 @@
 		private System.Windows.Forms.ToolStripButton btnNew;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton btnSave;
-		private App.Library.Controls.BuilderTextBox builderTextBox1;
+		private WinForms.Library.Controls.BuilderTextBox builderTextBox1;
 		private System.Windows.Forms.ComboBox cbBelt;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.NumericUpDown numericUpDown1;
