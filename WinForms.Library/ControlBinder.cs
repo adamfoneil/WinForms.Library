@@ -117,7 +117,7 @@ namespace WinForms.Library
 
 		#region ComboBox
 
-		public void Add<TEnum>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+		public void AddEnum<TEnum>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
 		{
 			control.Fill<TEnum>();
 
@@ -132,7 +132,7 @@ namespace WinForms.Library
 			};
 		}
 
-		public void Add<TEnum>(ComboBox control, Expression<Func<TDocument, TEnum>> property)
+		public void AddEnum<TEnum>(ComboBox control, Expression<Func<TDocument, TEnum>> property)
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -146,10 +146,10 @@ namespace WinForms.Library
 				ComboBoxExtensions.SetValue(control, func.Invoke(doc));
 			};
 
-			Add<TEnum>(control, setProperty, setControl);
+			AddEnum<TEnum>(control, setProperty, setControl);
 		}
 
-		public void Add<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
+		public void AddItems<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
 		{
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
@@ -163,10 +163,10 @@ namespace WinForms.Library
 				ComboBoxExtensions.SetItem(control, func.Invoke(doc));
 			};
 
-			Add(control, setProperty, setControl, items);
+			AddItems(control, setProperty, setControl, items);
 		}
 
-		public void Add<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+		public void AddItems<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
 		{
 			control.Fill(items);
 
