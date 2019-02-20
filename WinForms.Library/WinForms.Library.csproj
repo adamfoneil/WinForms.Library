@@ -69,7 +69,6 @@
     <Compile Include="FileSystem_Search.cs" />
     <Compile Include="FileSystem_Shell.cs" />
     <Compile Include="FormPosition.cs" />
-    <Compile Include="Interfaces\IFilename.cs" />
     <Compile Include="JsonSDI.cs" />
     <Compile Include="ControlBinder.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using WinForms.Library.Interfaces;
 
 namespace WinForms.Library
 {
@@ -50,12 +49,12 @@ namespace WinForms.Library
 		[DllImport("kernel32.dll", SetLastError = true)]
 		private static extern bool FindClose(IntPtr hFindFile);
 
-		public static IEnumerable<SearchResult> Search(string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
+		public static IEnumerable<FileSearchResult> Search(string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
 		{
 			return SearchR(path, path, excludeItems, includeItems, progress).ToArray();
 		}
 
-		public static async Task<IEnumerable<SearchResult>> SearchAsync(string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
+		public static async Task<IEnumerable<FileSearchResult>> SearchAsync(string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
 		{
 			return await Task.Run(() =>
 			{
@@ -63,13 +62,13 @@ namespace WinForms.Library
 			});
 		}
 
-		private static List<SearchResult> SearchR(string originalPath, string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
+		private static List<FileSearchResult> SearchR(string originalPath, string path, string[] excludeItems = null, string[] includeItems = null, IProgress<string> progress = null)
 		{
 			IntPtr invalidHandle = new IntPtr(-1);
 
 			IntPtr handle;
 			WIN32_FIND_DATA findData;
-			List<SearchResult> results = new List<SearchResult>();
+			List<FileSearchResult> results = new List<FileSearchResult>();
 
 			handle = FindFirstFile($@"{path}\*", out findData);
 			if (handle != invalidHandle)
@@ -93,7 +92,7 @@ namespace WinForms.Library
 							progress?.Report(baseName);
 							int extPeriod = baseName.LastIndexOf(".");
 
-							results.Add(new SearchResult()
+							results.Add(new FileSearchResult()
 							{
 								FullPath = fullPath,
 								BaseName = baseName,
@@ -175,7 +174,7 @@ namespace WinForms.Library
 			return DateTime.FromFileTime(longValue);
 		}
 
-		public class SearchResult : IFilename
+		public class FileSearchResult
 		{
 			public string FullPath { get; set; }
 			public string BaseName { get; set; }
