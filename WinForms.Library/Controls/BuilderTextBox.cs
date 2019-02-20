@@ -23,6 +23,41 @@ namespace WinForms.Library.Controls
 			InitializeComponent();			
 		}
 
+		/// <summary>
+		/// Displays Open File Dialog and returns true if the user clicks OK on it.
+		/// Use e.Result to use selected filename
+		/// </summary>
+		public bool SelectFile(string filter, BuilderEventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = filter;
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				e.Result = dlg.FileName;
+				e.IsAccepted = true;
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Displays the Folder Browser Dialog and returns true if user clicks OK on it.
+		/// Use e.Result to use selected folder
+		/// </summary>				
+		public bool SelectFolder(BuilderEventArgs e)
+		{
+			FolderBrowserDialog dlg = new FolderBrowserDialog();
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				e.Result = dlg.SelectedPath;
+				e.IsAccepted = true;
+				return true;
+			}
+
+			return false;
+		}
+
 		public new bool Enabled
 		{
 			get { return textBox1.Enabled; }

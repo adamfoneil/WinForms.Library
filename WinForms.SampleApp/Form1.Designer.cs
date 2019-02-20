@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.tbFirstName = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -44,9 +45,12 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			this.label5 = new System.Windows.Forms.Label();
-			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
 			this.cbItem = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
+			this.listView1 = new System.Windows.Forms.ListView();
+			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
+			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.SuspendLayout();
@@ -117,7 +121,7 @@
             this.btnSave});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(549, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(847, 25);
 			this.toolStrip1.TabIndex = 7;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -185,16 +189,6 @@
 			this.label5.TabIndex = 12;
 			this.label5.Text = "Level:";
 			// 
-			// builderTextBox1
-			// 
-			this.builderTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.builderTextBox1.Location = new System.Drawing.Point(85, 186);
-			this.builderTextBox1.Name = "builderTextBox1";
-			this.builderTextBox1.Size = new System.Drawing.Size(230, 26);
-			this.builderTextBox1.Suggestions = null;
-			this.builderTextBox1.TabIndex = 8;
-			this.builderTextBox1.Value = "";
-			// 
 			// cbItem
 			// 
 			this.cbItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -213,11 +207,55 @@
 			this.label6.TabIndex = 14;
 			this.label6.Text = "Item:";
 			// 
+			// listView1
+			// 
+			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.listView1.Location = new System.Drawing.Point(396, 60);
+			this.listView1.Name = "listView1";
+			this.listView1.Size = new System.Drawing.Size(439, 248);
+			this.listView1.SmallImageList = this.imageList1;
+			this.listView1.TabIndex = 15;
+			this.listView1.UseCompatibleStateImageBehavior = false;
+			this.listView1.View = System.Windows.Forms.View.SmallIcon;
+			// 
+			// imageList1
+			// 
+			this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+			// 
+			// bldPath
+			// 
+			this.bldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bldPath.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.bldPath.Location = new System.Drawing.Point(396, 28);
+			this.bldPath.Name = "bldPath";
+			this.bldPath.Size = new System.Drawing.Size(439, 26);
+			this.bldPath.Suggestions = null;
+			this.bldPath.TabIndex = 16;
+			this.bldPath.Value = "";
+			this.bldPath.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.bldPath_BuilderClicked);
+			// 
+			// builderTextBox1
+			// 
+			this.builderTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.builderTextBox1.Location = new System.Drawing.Point(85, 186);
+			this.builderTextBox1.Name = "builderTextBox1";
+			this.builderTextBox1.Size = new System.Drawing.Size(230, 26);
+			this.builderTextBox1.Suggestions = null;
+			this.builderTextBox1.TabIndex = 8;
+			this.builderTextBox1.Value = "";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(549, 320);
+			this.ClientSize = new System.Drawing.Size(847, 321);
+			this.Controls.Add(this.bldPath);
+			this.Controls.Add(this.listView1);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.cbItem);
 			this.Controls.Add(this.label5);
@@ -265,6 +303,9 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ComboBox cbItem;
 		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.ListView listView1;
+		private Library.Controls.BuilderTextBox bldPath;
+		private System.Windows.Forms.ImageList imageList1;
 	}
 }
 

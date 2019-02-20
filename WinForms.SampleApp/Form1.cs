@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
 using WinForms.SampleApp.Models;
@@ -49,6 +50,24 @@ namespace WinForms.SampleApp
 		private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			await _docManager.FormClosingAsync(e);
+		}
+
+		private async void bldPath_BuilderClicked(object sender, Library.Controls.BuilderEventArgs e)
+		{
+			if (bldPath.SelectFolder(e))
+			{
+				var files = await FileSystem.SearchAsync(e.Result);
+				listView1.Items.Clear();
+				var list = files.ToArray().Take(100);
+				foreach (var file in list)
+				{					
+					var listItem = new ListViewItem(file.FullPath)
+					{
+						ImageKey = FileSystem.AddIcon(imageList1, file.FullPath, FileSystem.IconSize.Small)
+					};
+					listView1.Items.Add(listItem);
+				}
+			}
 		}
 	}
 }
