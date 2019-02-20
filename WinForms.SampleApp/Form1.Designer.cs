@@ -51,8 +51,12 @@
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
 			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.revealInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tbFirstName
@@ -212,6 +216,7 @@
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.listView1.ContextMenuStrip = this.contextMenuStrip1;
 			this.listView1.Location = new System.Drawing.Point(396, 60);
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(439, 248);
@@ -219,6 +224,7 @@
 			this.listView1.TabIndex = 15;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.SmallIcon;
+			this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
 			// 
 			// imageList1
 			// 
@@ -249,6 +255,28 @@
 			this.builderTextBox1.TabIndex = 8;
 			this.builderTextBox1.Value = "";
 			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.revealInFileExplorerToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(188, 70);
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
+			// revealInFileExplorerToolStripMenuItem
+			// 
+			this.revealInFileExplorerToolStripMenuItem.Name = "revealInFileExplorerToolStripMenuItem";
+			this.revealInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.revealInFileExplorerToolStripMenuItem.Text = "Reveal in File Explorer";
+			this.revealInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.revealInFileExplorerToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,6 +306,7 @@
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -306,6 +335,9 @@
 		private System.Windows.Forms.ListView listView1;
 		private Library.Controls.BuilderTextBox bldPath;
 		private System.Windows.Forms.ImageList imageList1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem revealInFileExplorerToolStripMenuItem;
 	}
 }
 

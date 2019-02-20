@@ -9,6 +9,7 @@ namespace WinForms.SampleApp
 	public partial class Form1 : Form
 	{
 		private JsonSDI<AppDocument> _docManager = null;
+		private ListViewItem _selectedItem = null;
 
 		public Form1()
 		{
@@ -67,6 +68,31 @@ namespace WinForms.SampleApp
 					};
 					listView1.Items.Add(listItem);
 				}
+			}
+		}
+
+		private void listView1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var hti = listView1.HitTest(e.Location);
+				_selectedItem = hti.Item;
+			}
+		}
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedItem != null)
+			{
+				FileSystem.OpenDocument(_selectedItem.Text);
+			}
+		}
+
+		private void revealInFileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedItem != null)
+			{
+				FileSystem.RevealInExplorer(_selectedItem.Text);
 			}
 		}
 	}
