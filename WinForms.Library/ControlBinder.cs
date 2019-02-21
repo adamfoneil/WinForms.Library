@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
@@ -179,6 +180,28 @@ namespace WinForms.Library
 				setProperty.Invoke(Document);
 				IsDirty = true;
 			};
+		}
+
+		/// <summary>
+		/// Fills a combo box from TItem keys of a dictionary, mapping to corresponding TValues that are bound to the document		
+		/// </summary>
+		public void AddItems<TValue, TItem>(ComboBox control, Expression<Func<TDocument, TValue>> property, Dictionary<TValue, TItem> itemDictionary) where TItem : class
+		{			
+			var pi = GetProperty(property);
+			Action<TDocument> setProperty = (doc) =>
+			{
+				var reverseDictionary = itemDictionary.ToDictionary(kp => kp.Value, kp => kp.Key);
+				pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);
+			};
+
+			var func = property.Compile();
+			Action<TDocument> setControl = (doc) =>
+			{
+				var value = func.Invoke(doc);				
+				ComboBoxExtensions.SetItem(control, itemDictionary[value]);
+			};
+
+			AddItems(control, setProperty, setControl, itemDictionary.Select(kp => kp.Value));
 		}
 
 		#endregion

@@ -15,6 +15,13 @@ namespace WinForms.SampleApp.Models
 		Black
 	}
 
+	public enum ItemKeys
+	{
+		Binghamton,
+		Plopthee,
+		Galvatron
+	}
+
 	/// <summary>
 	/// This is just a bogus model class demonstrating various types for use with DocumentManager
 	/// </summary>
@@ -29,7 +36,8 @@ namespace WinForms.SampleApp.Models
 		public decimal Level { get; set; } // numeric updown
 		public string[] Items { get; set; } // not sure about this yet
 		public string BuilderText { get; set; } // plain text used with builder textbox
-		public DocumentItem Item { get; set; }
+		public DocumentItem Item { get; set; }		
+		public ItemKeys Key { get; set; } // For cases when we bind to a scalar value in the document, but we use corresponding reference types (e.g. SMM SourceType)
 
 		public static IEnumerable<DocumentItem> SelectableItems
 		{
@@ -41,6 +49,19 @@ namespace WinForms.SampleApp.Models
 					new DocumentItem() { Name = "Blather", Value = 110 },
 					new DocumentItem() { Name = "Hopscotch", Value = 632 },
 					new DocumentItem() { Name = "Branzenfiller", Value = 211 }
+				};
+			}
+		}
+
+		public static Dictionary<ItemKeys, DocumentItem> KeyedItems
+		{
+			get
+			{
+				return new Dictionary<ItemKeys, DocumentItem>()
+				{
+					{ ItemKeys.Binghamton, new DocumentItem() { Name = "Binghamton", Value = 219 } },
+					{ ItemKeys.Plopthee, new DocumentItem() { Name = "Plopthee", Value = 198 } },
+					{ ItemKeys.Galvatron, new DocumentItem() { Name = "Galvatron", Value = 82 } }
 				};
 			}
 		}

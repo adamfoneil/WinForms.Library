@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
@@ -28,6 +29,7 @@ namespace WinForms.SampleApp
 			_docManager.Controls.Add(builderTextBox1, doc => doc.BuilderText);
 			_docManager.Controls.Add(numericUpDown1, doc => doc.Level);
 			_docManager.Controls.AddItems(cbItem, doc => doc.Item, AppDocument.SelectableItems);
+			_docManager.Controls.AddItems(cbKeyedItem, doc => doc.Key, AppDocument.KeyedItems);
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)

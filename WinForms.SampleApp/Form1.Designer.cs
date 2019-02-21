@@ -48,12 +48,14 @@
 			this.cbItem = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.listView1 = new System.Windows.Forms.ListView();
-			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
-			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.revealInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
+			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.cbKeyedItem = new System.Windows.Forms.ComboBox();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.contextMenuStrip1.SuspendLayout();
@@ -219,12 +221,34 @@
 			this.listView1.ContextMenuStrip = this.contextMenuStrip1;
 			this.listView1.Location = new System.Drawing.Point(396, 60);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(439, 248);
+			this.listView1.Size = new System.Drawing.Size(439, 297);
 			this.listView1.SmallImageList = this.imageList1;
 			this.listView1.TabIndex = 15;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.SmallIcon;
 			this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.revealInFileExplorerToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(188, 48);
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
+			// revealInFileExplorerToolStripMenuItem
+			// 
+			this.revealInFileExplorerToolStripMenuItem.Name = "revealInFileExplorerToolStripMenuItem";
+			this.revealInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+			this.revealInFileExplorerToolStripMenuItem.Text = "Reveal in File Explorer";
+			this.revealInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.revealInFileExplorerToolStripMenuItem_Click);
 			// 
 			// imageList1
 			// 
@@ -255,33 +279,31 @@
 			this.builderTextBox1.TabIndex = 8;
 			this.builderTextBox1.Value = "";
 			// 
-			// contextMenuStrip1
+			// label7
 			// 
-			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.revealInFileExplorerToolStripMenuItem});
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(188, 70);
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(12, 274);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(63, 13);
+			this.label7.TabIndex = 17;
+			this.label7.Text = "Keyed Item:";
 			// 
-			// openToolStripMenuItem
+			// cbKeyedItem
 			// 
-			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.openToolStripMenuItem.Text = "Open";
-			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-			// 
-			// revealInFileExplorerToolStripMenuItem
-			// 
-			this.revealInFileExplorerToolStripMenuItem.Name = "revealInFileExplorerToolStripMenuItem";
-			this.revealInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-			this.revealInFileExplorerToolStripMenuItem.Text = "Reveal in File Explorer";
-			this.revealInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.revealInFileExplorerToolStripMenuItem_Click);
+			this.cbKeyedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbKeyedItem.FormattingEnabled = true;
+			this.cbKeyedItem.Location = new System.Drawing.Point(85, 271);
+			this.cbKeyedItem.Name = "cbKeyedItem";
+			this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
+			this.cbKeyedItem.TabIndex = 18;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(847, 321);
+			this.ClientSize = new System.Drawing.Size(847, 370);
+			this.Controls.Add(this.cbKeyedItem);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.bldPath);
 			this.Controls.Add(this.listView1);
 			this.Controls.Add(this.label6);
@@ -338,6 +360,8 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem revealInFileExplorerToolStripMenuItem;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.ComboBox cbKeyedItem;
 	}
 }
 
