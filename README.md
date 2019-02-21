@@ -1,5 +1,7 @@
 Nuget package: **WinForms.Library**
 
+**Update 2/21/19** Package version 1.0.12. A lot of new functionality supporting [SQL Model Merge](https://aosoftware.net/Project/SqlModelMerge) and [Delivery](https://github.com/adamosoftware/Delivery) projects. I need to write a proper wiki on the features here, but suffice it to say here that there's been a whirlwind of updates here to support a variety of data binding scenarios in WinForm apps that use Json-backed documents.
+
 **Update 2/18/19** Package version 1.0.1. I renamed `DocumentManager` to [JsonSDI](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/JsonSDI.cs) to better reflect its intent. (SDI meaning Single Document Interface.) Also, I extracted its control binding features to a new class [ControlBinder](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/ControlBinder.cs). This is adapted in simplified form from something I wrote about on CodeProject.com [here](https://www.codeproject.com/Articles/1193797/Postulate-WinForms-a-new-look-at-data-binding). Here's what the [code pictured below](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.SampleApp/Form1.cs#L19) looks like now that it's been refactored some:
 
 ```
