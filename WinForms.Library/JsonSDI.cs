@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinForms.Library.Controls;
 
 namespace WinForms.Library
 {
@@ -16,10 +17,24 @@ namespace WinForms.Library
 	/// </summary>
 	public class JsonSDI<TDocument> where TDocument : new()
 	{
+		/// <summary>
+		/// Json deserialization completed
+		/// </summary>
 		public event EventHandler FileOpened;
 
+		/// <summary>
+		/// File was selected with File Open or File Save dialog
+		/// </summary>
+		public event FileSelectedHandler FileSelected;
+
+		/// <summary>
+		/// Json serialization completed
+		/// </summary>
 		public event EventHandler FileSaved;
 
+		/// <summary>
+		/// Filename property was changed
+		/// </summary>
 		public event EventHandler FilenameChanged;
 
 		private string _fileName;
@@ -82,6 +97,7 @@ namespace WinForms.Library
 			dlg.Filter = FileDialogFilter;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
+				FileSelected?.Invoke(dlg.FileName);
 				await OpenInnerAsync(dlg.FileName);
 				return true;
 			}
@@ -140,6 +156,7 @@ namespace WinForms.Library
 			dlg.Filter = FileDialogFilter;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
+				FileSelected?.Invoke(dlg.FileName);
 				Filename = dlg.FileName;
 				await SaveInnerAsync();
 				return true;

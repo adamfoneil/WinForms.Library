@@ -26,8 +26,7 @@ namespace WinForms.SampleApp
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			_docManager = new JsonSDI<AppDocument>(".json", "Json Files|*.json", "Save changes?");
-			_docManager.FileOpened += UpdateMruList;
-			_docManager.FileSaved += UpdateMruList;
+			_docManager.FileSelected += delegate (string fileName) { _recentFiles.Add(fileName); };			
 
 			_docManager.Document = new AppDocument();
 			_docManager.Controls.Add(tbFirstName, doc => doc.FirstName);
@@ -50,11 +49,6 @@ namespace WinForms.SampleApp
 				await _docManager.OpenAsync(fileName);
 			});
 
-		}
-
-		private void UpdateMruList(object sender, EventArgs e)
-		{			
-			_recentFiles.Add(_docManager.Filename);			
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)

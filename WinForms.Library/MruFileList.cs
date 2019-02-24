@@ -95,7 +95,8 @@ namespace WinForms.Library
 			JObject jo = JObject.Load(reader);
 			MruFileList result = new MruFileList();
 			result.MaxItems = (int)jo[nameof(MruFileList.MaxItems)];
-			var items = jo[ItemsProperty].ToObject<string[]>(serializer).Reverse(); // since added items are actually inserted, I reverse them here to preserve the persisted order
+			// since added items are actually inserted, I reverse them here to preserve the persisted order
+			var items = jo[ItemsProperty].ToObject<string[]>(serializer).Reverse(); 
 			result.AddRange(items);
 			return result;
 		}
