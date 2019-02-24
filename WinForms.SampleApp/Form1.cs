@@ -1,8 +1,11 @@
-﻿using System;
+﻿using JsonSettings;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
+using WinForms.Library.Controls;
 using WinForms.SampleApp.Models;
 
 namespace WinForms.SampleApp
@@ -11,7 +14,9 @@ namespace WinForms.SampleApp
 	{
 		private JsonSDI<AppDocument> _docManager = null;
 		private ListViewItem _selectedItem = null;
-		private MruList<string> _recentFiles = null;
+		private MruFileList _recentFiles = null;
+
+		private const string mruFile = @"c:\users\adam\desktop\mruList.json";
 
 		public Form1()
 		{
@@ -21,6 +26,9 @@ namespace WinForms.SampleApp
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			_docManager = new JsonSDI<AppDocument>(".json", "Json Files|*.json", "Save changes?");
+			_docManager.FileOpened += UpdateMruList;
+			_docManager.FileSaved += UpdateMruList;
+
 			_docManager.Document = new AppDocument();
 			_docManager.Controls.Add(tbFirstName, doc => doc.FirstName);
 			_docManager.Controls.Add(tbLastName, doc => doc.LastName);
@@ -32,7 +40,33 @@ namespace WinForms.SampleApp
 			_docManager.Controls.AddItems(cbItem, doc => doc.Item, AppDocument.SelectableItems);
 			_docManager.Controls.AddItems(cbKeyedItem, doc => doc.Key, AppDocument.KeyedItems);
 
-			_recentFiles = new MruList<string>(4);
+			_recentFiles = JsonFile.Load(mruFile, () =>
+			{
+				return new MruFileList(4);
+			});
+
+			LoadMruToolbar(_recentFiles);
+		}
+
+		private void UpdateMruList(object sender, EventArgs e)
+		{
+			_recentFiles.Add(_docManager.Filename);
+			LoadMruToolbar(_recentFiles);
+		}
+
+		private void LoadMruToolbar(MruFileList files)
+		{
+			var buttons = toolStrip1.Items.OfType<OpenFileButton>().ToArray();
+			foreach (var btn in buttons) toolStrip1.Items.Remove(btn);
+
+			foreach (string fileName in files)
+			{
+				var btn = new OpenFileButton(fileName, async (f) =>
+				{
+					await _docManager.OpenAsync(f);
+				});
+				toolStrip1.Items.Add(btn);
+			}
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)
@@ -55,10 +89,12 @@ namespace WinForms.SampleApp
 
 		private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			if (_recentFiles != null) JsonFile.Save(mruFile, _recentFiles);
+
 			await _docManager.FormClosingAsync(e);
 		}
 
-		private async void bldPath_BuilderClicked(object sender, Library.Controls.BuilderEventArgs e)
+		private async void bldPath_BuilderClicked(object sender, BuilderEventArgs e)
 		{
 			if (bldPath.SelectFolder(e))
 			{

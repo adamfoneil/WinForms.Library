@@ -10,10 +10,11 @@ namespace WinForms.Library.Controls
 	{
 		public event FileSelectedHandler FileSelected;
 
-		public OpenFileButton(string fileName) : base(Path.GetFileNameWithoutExtension(fileName))
+		public OpenFileButton(string fileName, FileSelectedHandler handler = null) : base(Path.GetFileNameWithoutExtension(fileName))
 		{
 			Filename = fileName;
 			DisplayStyle = ToolStripItemDisplayStyle.Text;
+			if (handler != null) FileSelected = handler;
 		}
 
 		public string Filename { get; }
