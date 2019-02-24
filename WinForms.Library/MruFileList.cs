@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using WinForms.Library.Controls;
 
 namespace WinForms.Library
 {
@@ -23,11 +26,37 @@ namespace WinForms.Library
 
 		public int MaxItems { get; set; }
 
-		public new void Add(string item)
+		public new void Add(string fileName)
 		{
-			if (Contains(item)) return;
-			base.Insert(0, item);
+			if (Contains(fileName)) return;
+			base.Insert(0, fileName);
+
 			while (Count > MaxItems) RemoveAt(Count - 1);
+
+			if (ToolStripItemCollection != null)
+			{
+				RefreshMenuItems(ToolStripItemCollection, FileSelectedHandler);
+			}			
+		}
+
+		public void BindToMenu(ToolStripItemCollection itemCollection, FileSelectedHandler handler)
+		{
+			ToolStripItemCollection = itemCollection ?? throw new ArgumentNullException(nameof(itemCollection));
+			FileSelectedHandler = handler ?? throw new ArgumentNullException(nameof(handler));
+			RefreshMenuItems(itemCollection, handler);
+		}
+
+		private void RefreshMenuItems(ToolStripItemCollection itemCollection, FileSelectedHandler handler)
+		{
+			var buttons = itemCollection.OfType<OpenFileButton>().ToArray();
+			foreach (var btn in buttons) itemCollection.Remove(btn);
+
+			foreach (string fileName in this)
+			{
+				var btn = new OpenFileButton(fileName, handler);
+				btn.ToolTipText = fileName;
+				itemCollection.Add(btn);
+			}
 		}
 
 		/// <summary>
@@ -45,6 +74,10 @@ namespace WinForms.Library
 				if (File.Exists(item)) Add(item);
 			}
 		}
+
+		public ToolStripItemCollection ToolStripItemCollection { get; private set; }
+
+		public FileSelectedHandler FileSelectedHandler { get; private set; }
 	}
 
 	// thanks to https://stackoverflow.com/a/21272042/2023653
@@ -62,7 +95,8 @@ namespace WinForms.Library
 			JObject jo = JObject.Load(reader);
 			MruFileList result = new MruFileList();
 			result.MaxItems = (int)jo[nameof(MruFileList.MaxItems)];
-			result.AddRange(jo[ItemsProperty].ToObject<string[]>(serializer));
+			var items = jo[ItemsProperty].ToObject<string[]>(serializer).Reverse(); // since added items are actually inserted, I reverse them here to preserve the persisted order
+			result.AddRange(items);
 			return result;
 		}
 

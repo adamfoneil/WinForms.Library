@@ -37,10 +37,6 @@
 			this.chkIsActive = new System.Windows.Forms.CheckBox();
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.label3 = new System.Windows.Forms.Label();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.btnNew = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.btnSave = new System.Windows.Forms.ToolStripButton();
 			this.cbBelt = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -52,13 +48,17 @@
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.revealInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
-			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.cbKeyedItem = new System.Windows.Forms.ComboBox();
-			this.toolStrip1.SuspendLayout();
+			this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
+			this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
+			this.btnNew = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.btnSave = new System.Windows.Forms.ToolStripButton();
+			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.contextMenuStrip1.SuspendLayout();
+			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tbFirstName
@@ -118,48 +118,6 @@
 			this.label3.Size = new System.Drawing.Size(33, 13);
 			this.label3.TabIndex = 6;
 			this.label3.Text = "Date:";
-			// 
-			// toolStrip1
-			// 
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNew,
-            this.toolStripButton1,
-            this.btnSave});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(847, 25);
-			this.toolStrip1.TabIndex = 7;
-			this.toolStrip1.Text = "toolStrip1";
-			// 
-			// btnNew
-			// 
-			this.btnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
-			this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnNew.Name = "btnNew";
-			this.btnNew.Size = new System.Drawing.Size(35, 22);
-			this.btnNew.Text = "New";
-			this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-			// 
-			// toolStripButton1
-			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
-			this.toolStripButton1.Text = "Open...";
-			this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-			// 
-			// btnSave
-			// 
-			this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-			this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(35, 22);
-			this.btnSave.Text = "Save";
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// cbBelt
 			// 
@@ -256,6 +214,24 @@
 			this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
 			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
 			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(12, 274);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(63, 13);
+			this.label7.TabIndex = 17;
+			this.label7.Text = "Keyed Item:";
+			// 
+			// cbKeyedItem
+			// 
+			this.cbKeyedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbKeyedItem.FormattingEnabled = true;
+			this.cbKeyedItem.Location = new System.Drawing.Point(85, 271);
+			this.cbKeyedItem.Name = "cbKeyedItem";
+			this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
+			this.cbKeyedItem.TabIndex = 18;
+			// 
 			// bldPath
 			// 
 			this.bldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -279,23 +255,47 @@
 			this.builderTextBox1.TabIndex = 8;
 			this.builderTextBox1.Value = "";
 			// 
-			// label7
+			// btnNew
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(12, 274);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(63, 13);
-			this.label7.TabIndex = 17;
-			this.label7.Text = "Keyed Item:";
+			this.btnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
+			this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnNew.Name = "btnNew";
+			this.btnNew.Size = new System.Drawing.Size(35, 22);
+			this.btnNew.Text = "New";
+			this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
 			// 
-			// cbKeyedItem
+			// toolStripButton1
 			// 
-			this.cbKeyedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbKeyedItem.FormattingEnabled = true;
-			this.cbKeyedItem.Location = new System.Drawing.Point(85, 271);
-			this.cbKeyedItem.Name = "cbKeyedItem";
-			this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
-			this.cbKeyedItem.TabIndex = 18;
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
+			this.toolStripButton1.Text = "Open...";
+			this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+			this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(35, 22);
+			this.btnSave.Text = "Save";
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
+			// toolStrip1
+			// 
+			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNew,
+            this.toolStripButton1,
+            this.btnSave});
+			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip1.Name = "toolStrip1";
+			this.toolStrip1.Size = new System.Drawing.Size(847, 25);
+			this.toolStrip1.TabIndex = 7;
+			this.toolStrip1.Text = "toolStrip1";
 			// 
 			// Form1
 			// 
@@ -325,10 +325,10 @@
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.Load += new System.EventHandler(this.Form1_Load);
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			this.contextMenuStrip1.ResumeLayout(false);
+			this.toolStrip1.ResumeLayout(false);
+			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -343,10 +343,6 @@
 		private System.Windows.Forms.CheckBox chkIsActive;
 		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.ToolStripButton btnNew;
-		private System.Windows.Forms.ToolStripButton toolStripButton1;
-		private System.Windows.Forms.ToolStripButton btnSave;
 		private WinForms.Library.Controls.BuilderTextBox builderTextBox1;
 		private System.Windows.Forms.ComboBox cbBelt;
 		private System.Windows.Forms.Label label4;
@@ -362,6 +358,10 @@
 		private System.Windows.Forms.ToolStripMenuItem revealInFileExplorerToolStripMenuItem;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox cbKeyedItem;
+		private System.Windows.Forms.ToolStripButton btnNew;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
+		private System.Windows.Forms.ToolStripButton btnSave;
+		private System.Windows.Forms.ToolStrip toolStrip1;
 	}
 }
 

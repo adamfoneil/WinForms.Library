@@ -45,28 +45,16 @@ namespace WinForms.SampleApp
 				return new MruFileList(4);
 			});
 
-			LoadMruToolbar(_recentFiles);
+			_recentFiles.BindToMenu(toolStrip1.Items, async delegate (string fileName)
+			{
+				await _docManager.OpenAsync(fileName);
+			});
+
 		}
 
 		private void UpdateMruList(object sender, EventArgs e)
-		{
-			_recentFiles.Add(_docManager.Filename);
-			LoadMruToolbar(_recentFiles);
-		}
-
-		private void LoadMruToolbar(MruFileList files)
-		{
-			var buttons = toolStrip1.Items.OfType<OpenFileButton>().ToArray();
-			foreach (var btn in buttons) toolStrip1.Items.Remove(btn);
-
-			foreach (string fileName in files)
-			{
-				var btn = new OpenFileButton(fileName, async (f) =>
-				{
-					await _docManager.OpenAsync(f);
-				});
-				toolStrip1.Items.Add(btn);
-			}
+		{			
+			_recentFiles.Add(_docManager.Filename);			
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)
