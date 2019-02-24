@@ -11,6 +11,7 @@ namespace WinForms.SampleApp
 	{
 		private JsonSDI<AppDocument> _docManager = null;
 		private ListViewItem _selectedItem = null;
+		private MruList<string> _recentFiles = null;
 
 		public Form1()
 		{
@@ -30,6 +31,8 @@ namespace WinForms.SampleApp
 			_docManager.Controls.Add(numericUpDown1, doc => doc.Level);
 			_docManager.Controls.AddItems(cbItem, doc => doc.Item, AppDocument.SelectableItems);
 			_docManager.Controls.AddItems(cbKeyedItem, doc => doc.Key, AppDocument.KeyedItems);
+
+			_recentFiles = new MruList<string>(4);
 		}
 
 		private async void btnNew_Click(object sender, EventArgs e)
