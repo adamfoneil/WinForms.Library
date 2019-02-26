@@ -67,10 +67,10 @@ namespace WinForms.Library
 		public string FormClosingMessage { get; }
 		public bool HasFilename { get { return !string.IsNullOrEmpty(Filename); } }
 
-		public async Task<bool> OpenAsync(string fileName)
+		public async Task<bool> OpenAsync(string fileName, Func<TDocument> ifNotExists = null)
 		{
 			if (!await SaveIfDirtyAsync()) return false;
-			await OpenInnerAsync(fileName);
+			await OpenInnerAsync(fileName, ifNotExists);
 			return true;
 		}
 
