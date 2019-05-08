@@ -67,14 +67,14 @@ namespace WinForms.Library
 		public string FormClosingMessage { get; }
 		public bool HasFilename { get { return !string.IsNullOrEmpty(Filename); } }
 
-		public async Task<bool> OpenAsync(string fileName)
+		public async Task<bool> OpenAsync(string fileName, Func<TDocument> ifNotExists = null)
 		{
 			if (!await SaveIfDirtyAsync()) return false;
-			await OpenInnerAsync(fileName);
+			await OpenInnerAsync(fileName, ifNotExists);
 			return true;
 		}
 
-		public async Task<bool> PromptOpenAsync()
+		public async Task<bool> PromptOpenAsync(Func<TDocument> ifNotExists = null)
 		{
 			if (!await SaveIfDirtyAsync()) return false;
 
@@ -82,14 +82,14 @@ namespace WinForms.Library
 			dlg.Filter = FileDialogFilter;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				await OpenInnerAsync(dlg.FileName);
+				await OpenInnerAsync(dlg.FileName, ifNotExists);
 				return true;
 			}
 
 			return false;
 		}
 
-		private async Task OpenInnerAsync(string fileName)
+		private async Task OpenInnerAsync(string fileName, Func<TDocument> ifNotExists = null)
 		{
 			string ext = Path.GetExtension(fileName);
 
@@ -99,7 +99,7 @@ namespace WinForms.Library
 				openFile = FileHandlers[ext].Invoke(fileName);
 			}			
 			
-			Document = await JsonFile.LoadAsync<TDocument>(openFile);
+			Document = await JsonFile.LoadAsync(openFile, ifNotExists);
 			Filename = openFile;
 			FileOpened?.Invoke(this, new EventArgs());
 		}
