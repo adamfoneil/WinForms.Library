@@ -97,5 +97,16 @@ namespace WinForms.SampleApp
 				FileSystem.RevealInExplorer(_selectedItem.Text);
 			}
 		}
-	}
+
+        private void BtnFileType_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files|*.*";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string type = FileSystem.GetFileType(dlg.FileName);
+                MessageBox.Show(type);
+            }
+        }
+    }
 }
