@@ -120,7 +120,6 @@ namespace WinForms.Library
             }
         }
 
-
         public static Bitmap GetIcon(string path, IconSize size)
 		{
             return GetIcon(path, size, out string typeName);
