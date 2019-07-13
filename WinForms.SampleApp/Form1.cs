@@ -105,7 +105,8 @@ namespace WinForms.SampleApp
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 string type = FileSystem.GetFileType(dlg.FileName);
-                MessageBox.Show(type);
+                string size = FileSystem.GetFileSize(dlg.FileName);
+                MessageBox.Show(type + " - " + size);
             }
         }
     }
