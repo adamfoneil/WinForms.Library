@@ -138,7 +138,7 @@ namespace WinForms.Library
 			PropertyInfo pi = GetProperty(property);
 			Action<TDocument> setProperty = (doc) =>
 			{
-				pi.SetValue(doc, (control.SelectedItem as EnumValue<TEnum>).Value);
+				pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);
 			};
 
 			var func = property.Compile();

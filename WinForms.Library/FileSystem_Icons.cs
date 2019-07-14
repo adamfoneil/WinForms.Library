@@ -99,24 +99,36 @@ namespace WinForms.Library
 			return ext;
 		}
 
-		public static Bitmap GetIcon(string path, IconSize size)
-		{
-			// help from https://pontusmunck.com/2007/02/01/preserving-transparency-when-converting-icon-to-bitmap/
-			// and http://www.pinvoke.net/default.aspx/shell32.SHGetFileInfo
+        public static Bitmap GetIcon(string path, IconSize size, out string typeName)
+        {
+            // help from https://pontusmunck.com/2007/02/01/preserving-transparency-when-converting-icon-to-bitmap/
+            // and http://www.pinvoke.net/default.aspx/shell32.SHGetFileInfo
 
-			SHFILEINFO info = new SHFILEINFO();
-			int cbFileInfo = Marshal.SizeOf(info);
-			SHGFI flags = SHGFI.Icon | (SHGFI)size | SHGFI.UseFileAttributes;
-			SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, (uint)flags);
-			using (Icon ico = Icon.FromHandle(info.hIcon))
-			{
-				Bitmap bmp = new Bitmap(ico.Size.Width, ico.Size.Height);
-				using (Graphics g = Graphics.FromImage(bmp))
-				{
-					g.DrawIcon(ico, 0, 0);
-				}
-				return bmp;
-			}
+            SHFILEINFO info = new SHFILEINFO();
+            int cbFileInfo = Marshal.SizeOf(info);
+            SHGFI flags = SHGFI.Icon | (SHGFI)size | SHGFI.UseFileAttributes | SHGFI.TypeName;
+            SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, (uint)flags);
+            typeName = info.szTypeName;
+            using (Icon ico = Icon.FromHandle(info.hIcon))
+            {
+                Bitmap bmp = new Bitmap(ico.Size.Width, ico.Size.Height);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.DrawIcon(ico, 0, 0);
+                }
+                return bmp;
+            }
+        }
+
+        public static Bitmap GetIcon(string path, IconSize size)
+		{
+            return GetIcon(path, size, out string typeName);
 		}
+         
+        public static string GetFileType(string path)
+        {
+            GetIcon(path, IconSize.Small, out string typeName);
+            return typeName;
+        }
 	}
 }

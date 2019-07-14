@@ -8,7 +8,13 @@ namespace WinForms.Library.Extensions
 {
 	public static class ComboBoxExtensions
 	{
-		public static void Fill<TItem>(this ComboBox comboBox, IEnumerable<TItem> items)
+        public static void Fill<T>(this ComboBox comboBox, Dictionary<T, string> values)
+        {
+            comboBox.Items.Clear();
+            foreach (var kp in values) comboBox.Items.Add(new ListItem<T>(kp.Key, kp.Value));
+        }
+
+        public static void Fill<T>(this ComboBox comboBox, IEnumerable<T> items)
 		{
 			comboBox.Items.Clear();
 			items.ToList().ForEach((item) =>
@@ -27,17 +33,17 @@ namespace WinForms.Library.Extensions
 			int index = 0;
 			values.ToList().ForEach((e) =>
 			{
-				comboBox.Items.Add(new EnumValue<TEnum>(e, names[index]));
+				comboBox.Items.Add(new ListItem<TEnum>(e, names[index]));
 				index++;
 			});
 		}
 
-		public static void SetValue<TEnum>(this ComboBox comboBox, TEnum value)
+		public static void SetValue<T>(this ComboBox comboBox, T value)
 		{
 			int index = 0;
 			foreach (var item in comboBox.Items)
 			{
-				if ((item as EnumValue<TEnum>)?.Value.Equals(value) ?? false)
+				if ((item as ListItem<T>)?.Value.Equals(value) ?? false)
 				{
 					comboBox.SelectedIndex = index;
 					return;
@@ -62,10 +68,10 @@ namespace WinForms.Library.Extensions
 			}
 		}
 
-		public static TEnum GetValue<TEnum>(this ComboBox comboBox)
+		public static T GetValue<T>(this ComboBox comboBox)
 		{
-			var value = comboBox.SelectedItem as EnumValue<TEnum>;
-			return (value != null) ? value.Value : default(TEnum);
+			var value = comboBox.SelectedItem as ListItem<T>;
+			return (value != null) ? value.Value : default(T);
 		}
 
 		public static TItem GetItem<TItem>(this ComboBox comboBox) where TItem : class
