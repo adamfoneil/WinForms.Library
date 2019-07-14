@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\IBoundControl.cs" />
     <Compile Include="Models\ListItem.cs" />
     <Compile Include="Models\EnumValue.cs" />
+    <Compile Include="PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
