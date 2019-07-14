@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,6 +7,44 @@ namespace WinForms.Library
 {
     public static class PathUtil
     {
+        /// <summary>
+        /// Finds the common base path of a list of files
+        /// </summary>
+        /// <param name="samePathReturnsParent">if true, then the parent folder is returned if all the files in the list have same folder.
+        /// Use this when you need to distinguish between folders and files in a drag-drop operation, for example.</param>
+        public static string GetCommonPath(IEnumerable<string> fileNames, char separator = '\\', bool samePathReturnsParent = false)
+        {
+            // convert file list to array of folder name arrays
+            var explodedFiles = fileNames.Select(s => s.Split(new char[] { separator }, StringSplitOptions.RemoveEmptyEntries).ToArray());
+
+            int depth = 0;
+
+            bool AllFilesHaveSameFolderAtDepth(IEnumerable<string[]> files, int atDepth)
+            {
+                try
+                {
+                    var groups = files.GroupBy(item => item[atDepth]);
+                    return groups.Count() == 1;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            while (AllFilesHaveSameFolderAtDepth(explodedFiles, depth))
+            {
+                depth++;
+            }
+
+            if (samePathReturnsParent && explodedFiles.All(folders => folders.Length == depth + 1))
+            {
+                depth--;
+            }
+
+            return string.Join(separator.ToString(), explodedFiles.First().Take(depth));
+        }
+
         /// <summary>
         /// Converts a list of files to a dictionary where the key is unique portion of path and the value is the full path
         /// </summary>
@@ -79,6 +118,5 @@ namespace WinForms.Library
                 return string.Join("\\", folders.Skip(folders.Length - Depth - 1));
             }
         }
-
     }
 }

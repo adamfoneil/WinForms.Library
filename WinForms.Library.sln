@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms.Library", "WinForms.Library\WinForms.Library.csproj", "{6C29EBB9-16D8-42FC-A5E4-55C4CF6AD428}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms.SampleApp", "WinForms.SampleApp\WinForms.SampleApp.csproj", "{D9C228BD-2AD9-48DE-9F84-9522EA9FDD50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{6F930C3F-94BF-416A-B19F-EB5B49F987A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D9C228BD-2AD9-48DE-9F84-9522EA9FDD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9C228BD-2AD9-48DE-9F84-9522EA9FDD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9C228BD-2AD9-48DE-9F84-9522EA9FDD50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F930C3F-94BF-416A-B19F-EB5B49F987A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F930C3F-94BF-416A-B19F-EB5B49F987A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F930C3F-94BF-416A-B19F-EB5B49F987A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F930C3F-94BF-416A-B19F-EB5B49F987A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
