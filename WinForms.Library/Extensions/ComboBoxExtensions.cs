@@ -9,7 +9,7 @@ namespace WinForms.Library.Extensions
     public static class ComboBoxExtensions
     {
         public static void Fill<T>(this ComboBox comboBox, Dictionary<T, string> values)
-        {
+        {                        
             comboBox.Items.Clear();
             foreach (var kp in values) comboBox.Items.Add(new ListItem<T>(kp.Key, kp.Value));
         }

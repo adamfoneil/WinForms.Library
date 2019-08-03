@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\GridViewBinder.cs" />
     <Compile Include="Controls\BuilderTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -65,6 +66,7 @@
     <Compile Include="Controls\WebUrlLinkLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Extensions\ToolStripComboBoxExtensions.cs" />
     <Compile Include="FileSystem_Icons.cs" />
     <Compile Include="FileSystem_Search.cs" />
     <Compile Include="FileSystem_Shell.cs" />
