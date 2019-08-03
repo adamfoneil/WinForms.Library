@@ -17,6 +17,7 @@ namespace WinForms.Library.Abstract
         public GridViewBinder(DataGridView dataGridView)
         {
             _dataGridView = dataGridView;
+            _dataGridView.AutoGenerateColumns = false;
             _dataGridView.CurrentCellDirtyStateChanged += CellDirtyStateChanged;
             _dataGridView.RowValidated += RowValidated;
             _dataGridView.UserDeletingRow += RowDeleting;
@@ -35,6 +36,11 @@ namespace WinForms.Library.Abstract
             if (rows.Any()) _model = rows.First();
         }
 
+        protected abstract bool SupportsAsync { get; }
+
+        protected abstract void OnSave(TModel model);
+        protected abstract void OnDelete(TModel model);
+
         protected abstract Task OnSaveAsync(TModel model);
         protected abstract Task OnDeleteAsync(TModel model);
 
@@ -44,7 +50,15 @@ namespace WinForms.Library.Abstract
             {
                 if (_model != null)
                 {
-                    await OnSaveAsync(_model);
+                    if (SupportsAsync)
+                    {
+                        await OnSaveAsync(_model);
+                    }
+                    else
+                    {
+                        OnSave(_model);
+                    }                    
+                    
                     _model = null;
                 }
                 _modified = false;
@@ -64,7 +78,15 @@ namespace WinForms.Library.Abstract
         {
             if (_model != null)
             {
-                await OnDeleteAsync(_model);
+                if (SupportsAsync)
+                {
+                    await OnDeleteAsync(_model);
+                }
+                else
+                {
+                    OnDelete(_model);
+                }                
+                
                 _model = null;
             }
         }
