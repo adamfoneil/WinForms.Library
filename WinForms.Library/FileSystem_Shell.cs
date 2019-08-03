@@ -5,21 +5,21 @@ using System.Text;
 
 namespace WinForms.Library
 {
-	public static partial class FileSystem
-	{
-		public static void OpenDocument(string fileName)
-		{
-			ProcessStartInfo psi = new ProcessStartInfo(fileName);
-			psi.UseShellExecute = true;
-			Process.Start(psi);
-		}
+    public static partial class FileSystem
+    {
+        public static void OpenDocument(string fileName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo(fileName);
+            psi.UseShellExecute = true;
+            Process.Start(psi);
+        }
 
-		public static void RevealInExplorer(string fileName)
-		{
-			ProcessStartInfo psi = new ProcessStartInfo("explorer.exe");
-			psi.Arguments = $"/select,\"{fileName}\"";
-			Process.Start(psi);
-		}
+        public static void RevealInExplorer(string fileName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("explorer.exe");
+            psi.Arguments = $"/select,\"{fileName}\"";
+            Process.Start(psi);
+        }
 
         [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
         private static extern long StrFormatByteSize(long fileSize, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder buffer, int bufferSize);
