@@ -36,6 +36,11 @@ namespace WinForms.Library.Abstract
             if (rows.Any()) _model = rows.First();
         }
 
+        public IEnumerable<TModel> GetRows()
+        {
+            return (_dataGridView.DataSource as BindingSource).OfType<TModel>();
+        }
+
         protected abstract bool SupportsAsync { get; }
 
         protected abstract void OnSave(TModel model);
