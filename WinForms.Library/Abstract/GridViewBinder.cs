@@ -50,14 +50,22 @@ namespace WinForms.Library.Abstract
             {
                 if (_model != null)
                 {
-                    if (SupportsAsync)
+                    try
                     {
-                        await OnSaveAsync(_model);
+                        if (SupportsAsync)
+                        {
+                            await OnSaveAsync(_model);
+                        }
+                        else
+                        {
+                            OnSave(_model);
+                        }
+                        _dataGridView.Rows[e.RowIndex].ErrorText = null;
                     }
-                    else
+                    catch (Exception exc)
                     {
-                        OnSave(_model);
-                    }                    
+                        _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
+                    }
                     
                     _model = null;
                 }
@@ -78,14 +86,21 @@ namespace WinForms.Library.Abstract
         {
             if (_model != null)
             {
-                if (SupportsAsync)
+                try
                 {
-                    await OnDeleteAsync(_model);
+                    if (SupportsAsync)
+                    {
+                        await OnDeleteAsync(_model);
+                    }
+                    else
+                    {
+                        OnDelete(_model);
+                    }                    
                 }
-                else
+                catch (Exception exc)
                 {
-                    OnDelete(_model);
-                }                
+                    MessageBox.Show($"Error deleting record: " + exc.Message);
+                }
                 
                 _model = null;
             }
