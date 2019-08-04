@@ -46,29 +46,26 @@ namespace WinForms.Library.Abstract
 
         private async void RowValidated(object sender, DataGridViewCellEventArgs e)
         {
-            if (_modified)
-            {
-                if (_model != null)
+            if (_modified && _model != null)
+            {                
+                try
                 {
-                    try
+                    if (SupportsAsync)
                     {
-                        if (SupportsAsync)
-                        {
-                            await OnSaveAsync(_model);
-                        }
-                        else
-                        {
-                            OnSave(_model);
-                        }
-                        _dataGridView.Rows[e.RowIndex].ErrorText = null;
+                        await OnSaveAsync(_model);
                     }
-                    catch (Exception exc)
+                    else
                     {
-                        _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
+                        OnSave(_model);
                     }
-                    
-                    _model = null;
+                    _dataGridView.Rows[e.RowIndex].ErrorText = null;
                 }
+                catch (Exception exc)
+                {
+                    _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
+                }
+                    
+                _model = null;                
                 _modified = false;
             }
         }
