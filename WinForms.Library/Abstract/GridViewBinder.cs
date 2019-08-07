@@ -29,8 +29,12 @@ namespace WinForms.Library.Abstract
         {
             var row = _dataGridView.Rows[e.RowIndex];
             var record = row.DataBoundItem as TModel;
-            var valid = IsValid(record, out string message);
-            row.ErrorText = (valid) ? null : message;            
+            if (record != null)
+            {
+                var valid = IsValid(record, out string message);
+                row.ErrorText = (valid) ? null : message;
+                e.Cancel = !valid;
+            }
         }
 
         protected virtual bool IsValid(TModel record, out string message)
