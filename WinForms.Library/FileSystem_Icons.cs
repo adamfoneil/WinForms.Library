@@ -89,9 +89,11 @@ namespace WinForms.Library
             OverlayIndex = 0x000000040,
         }
 
-        public static string AddIcon(ImageList imageList, string path, IconSize size)
+        public static string AddIcon(ImageList imageList, string path, IconSize size, string folderIconKey = null)
         {
-            string ext = Path.GetExtension(path);
+            if (!string.IsNullOrEmpty(folderIconKey) && Directory.Exists(path)) return folderIconKey;
+
+            string ext = Path.GetExtension(path);            
             if (imageList.Images.ContainsKey(ext)) return ext;
 
             var icon = GetIcon(path, size);
