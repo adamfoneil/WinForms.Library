@@ -22,6 +22,21 @@ namespace WinForms.Library.Abstract
             _dataGridView.RowValidated += RowValidated;
             _dataGridView.UserDeletingRow += RowDeleting;
             _dataGridView.UserDeletedRow += RowDeleted;
+            _dataGridView.RowValidating += RowValidating;
+        }
+
+        private void RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            var row = _dataGridView.Rows[e.RowIndex];
+            var record = row.DataBoundItem as TModel;
+            var valid = IsValid(record, out string message);
+            row.ErrorText = (valid) ? null : message;            
+        }
+
+        protected virtual bool IsValid(TModel record, out string message)
+        {
+            message = null;
+            return true;
         }
 
         public void Fill(IEnumerable<TModel> rows)
