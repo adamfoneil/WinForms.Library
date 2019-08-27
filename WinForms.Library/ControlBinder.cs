@@ -10,6 +10,8 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
+    public delegate void LoadValuesHandler<TDocument>(object sender, TDocument document);
+
     public class ControlBinder<TDocument>
     {
         private bool _dirty = false;
@@ -20,6 +22,7 @@ namespace WinForms.Library
         public TDocument Document { get; set; }
 
         public event EventHandler IsDirtyChanged;
+        public event LoadValuesHandler<TDocument> LoadingValues;
 
         public bool IsDirty
         {
@@ -46,6 +49,7 @@ namespace WinForms.Library
         {
             _suspend = true;
             foreach (var setter in _setControls) setter.Invoke(Document);
+            LoadingValues?.Invoke(this, Document);
             _suspend = false;
             IsDirty = false;
         }
