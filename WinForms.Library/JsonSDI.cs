@@ -18,6 +18,7 @@ namespace WinForms.Library
     {
         public event EventHandler FileOpened;
 
+        public event EventHandler SavingFile;
         public event EventHandler FileSaved;
 
         public event EventHandler FilenameChanged;
@@ -196,6 +197,7 @@ namespace WinForms.Library
 
         private async Task SaveInnerAsync()
         {
+            SavingFile?.Invoke(this, new EventArgs());
             await JsonFile.SaveAsync(Filename, Document, UpdateSerializerSettingsOnSave);
             Controls.IsDirty = false;
             FileSaved?.Invoke(this, new EventArgs());
