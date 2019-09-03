@@ -39,6 +39,10 @@ namespace WinForms.SampleApp.Models
         public DocumentItem Item { get; set; }
         public ItemKeys Key { get; set; } // For cases when we bind to a scalar value in the document, but we use corresponding reference types (e.g. SMM SourceType)
 
+        // toolstrip values
+        public string ToolStripText { get; set; }
+        public int DocumentItemValue { get; set; }
+
         public static IEnumerable<DocumentItem> SelectableItems
         {
             get

@@ -320,6 +320,75 @@ namespace WinForms.Library
 
         #endregion IBoundControl
 
+        #region ToolStripTextBox
+
+        public void Add(ToolStripTextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        {
+            _setControls.Add(setControl);
+
+            control.TextChanged += delegate (object sender, EventArgs e)
+            {
+                if (_suspend) return;
+                setProperty.Invoke(Document);
+                IsDirty = true;
+            };
+        }
+
+        public void Add(ToolStripTextBox control, Expression<Func<TDocument, object>> property)
+        {
+            PropertyInfo pi = GetProperty(property);
+            Action<TDocument> setProperty = (doc) =>
+            {
+                pi.SetValue(doc, control.Text);
+            };
+
+            var func = property.Compile();
+            Action<TDocument> setControl = (doc) =>
+            {
+                control.Text = func.Invoke(doc)?.ToString();
+            };
+
+            Add(control, setProperty, setControl);
+        }
+
+        #endregion
+
+        #region ToolStripComboBox
+
+        public void AddItems<TItem>(ToolStripComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+        {
+            ToolStripComboBoxExtensions.Fill(control, items);            
+
+            _clearControls.Add(() => control.SelectedIndex = -1);
+            _setControls.Add(setControl);
+
+            control.SelectedIndexChanged += delegate (object sender, EventArgs e)
+            {
+                if (_suspend) return;
+                setProperty.Invoke(Document);
+                IsDirty = true;
+            };
+        }
+
+        public void AddItems<TItem>(ToolStripComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
+        {
+            PropertyInfo pi = GetProperty(property);
+            Action<TDocument> setProperty = (doc) =>
+            {
+                pi.SetValue(doc, (control.SelectedItem as TItem));
+            };
+
+            var func = property.Compile();
+            Action<TDocument> setControl = (doc) =>
+            {
+                ToolStripComboBoxExtensions.SetItem(control, func.Invoke(doc));                
+            };
+
+            AddItems(control, setProperty, setControl, items);
+        }
+
+        #endregion
+
         #region support methods
 
         private PropertyInfo GetProperty<TValue>(Expression<Func<TDocument, TValue>> property)

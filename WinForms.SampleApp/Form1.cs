@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
+using WinForms.Library.Extensions;
 using WinForms.SampleApp.Models;
 
 namespace WinForms.SampleApp
@@ -29,6 +30,12 @@ namespace WinForms.SampleApp
             _docManager.Controls.Add(numericUpDown1, doc => doc.Level);
             _docManager.Controls.AddItems(cbItem, doc => doc.Item, AppDocument.SelectableItems);
             _docManager.Controls.AddItems(cbKeyedItem, doc => doc.Key, AppDocument.KeyedItems);
+
+            _docManager.Controls.Add(tbToolStrip, doc => doc.ToolStripText);
+            _docManager.Controls.AddItems(cbToolStrip, 
+                (doc) => doc.DocumentItemValue = ToolStripComboBoxExtensions.GetItem<DocumentItem>(cbToolStrip).Value,
+                (doc) => cbToolStrip.SelectedItem = AppDocument.SelectableItems.SingleOrDefault(item => item.Value == doc.DocumentItemValue),
+                AppDocument.SelectableItems);
         }
 
         private async void btnNew_Click(object sender, EventArgs e)

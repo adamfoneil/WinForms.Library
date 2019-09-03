@@ -41,6 +41,7 @@
             this.btnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.btnFileType = new System.Windows.Forms.ToolStripButton();
             this.cbBelt = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -56,7 +57,8 @@
             this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbKeyedItem = new System.Windows.Forms.ComboBox();
-            this.btnFileType = new System.Windows.Forms.ToolStripButton();
+            this.tbToolStrip = new System.Windows.Forms.ToolStripTextBox();
+            this.cbToolStrip = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -126,7 +128,9 @@
             this.btnNew,
             this.toolStripButton1,
             this.btnSave,
-            this.btnFileType});
+            this.btnFileType,
+            this.tbToolStrip,
+            this.cbToolStrip});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(847, 25);
@@ -162,6 +166,16 @@
             this.btnSave.Size = new System.Drawing.Size(35, 22);
             this.btnSave.Text = "Save";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnFileType
+            // 
+            this.btnFileType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFileType.Image = ((System.Drawing.Image)(resources.GetObject("btnFileType.Image")));
+            this.btnFileType.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFileType.Name = "btnFileType";
+            this.btnFileType.Size = new System.Drawing.Size(23, 22);
+            this.btnFileType.Text = "Get File Type";
+            this.btnFileType.Click += new System.EventHandler(this.BtnFileType_Click);
             // 
             // cbBelt
             // 
@@ -299,15 +313,16 @@
             this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
             this.cbKeyedItem.TabIndex = 18;
             // 
-            // btnFileType
+            // tbToolStrip
             // 
-            this.btnFileType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFileType.Image = ((System.Drawing.Image)(resources.GetObject("btnFileType.Image")));
-            this.btnFileType.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFileType.Name = "btnFileType";
-            this.btnFileType.Size = new System.Drawing.Size(23, 22);
-            this.btnFileType.Text = "Get File Type";
-            this.btnFileType.Click += new System.EventHandler(this.BtnFileType_Click);
+            this.tbToolStrip.Name = "tbToolStrip";
+            this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
+            // 
+            // cbToolStrip
+            // 
+            this.cbToolStrip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbToolStrip.Name = "cbToolStrip";
+            this.cbToolStrip.Size = new System.Drawing.Size(121, 25);
             // 
             // Form1
             // 
@@ -375,6 +390,8 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox cbKeyedItem;
         private System.Windows.Forms.ToolStripButton btnFileType;
+        private System.Windows.Forms.ToolStripTextBox tbToolStrip;
+        private System.Windows.Forms.ToolStripComboBox cbToolStrip;
     }
 }
 
