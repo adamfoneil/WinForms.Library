@@ -153,7 +153,7 @@ namespace WinForms.Library
         {
             if (!HasFilename)
             {
-                return await PromptSaveAsync();
+                return await PromptSaveAsync(initialPath);
             }
 
             await SaveInnerAsync();
