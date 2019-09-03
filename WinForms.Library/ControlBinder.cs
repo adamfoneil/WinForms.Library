@@ -14,12 +14,21 @@ namespace WinForms.Library
 
     public class ControlBinder<TDocument>
     {
+        private TDocument _document;
         private bool _dirty = false;
         private bool _suspend = false;
         private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
         private List<Action> _clearControls = new List<Action>();
 
-        public TDocument Document { get; set; }
+        public TDocument Document
+        {
+            get { return _document; }
+            set
+            {
+                _document = value;
+                LoadValues();
+            }
+        }
 
         public event EventHandler IsDirtyChanged;
         public event LoadValuesHandler<TDocument> LoadingValues;
@@ -245,7 +254,7 @@ namespace WinForms.Library
 
         #endregion
 
-        #region NumericUpDate
+        #region NumericUpDown
 
         public void Add(NumericUpDown control, Action<TDocument> setProperty, Action<TDocument> setControl)
         {
