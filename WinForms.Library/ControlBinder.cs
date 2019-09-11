@@ -31,6 +31,7 @@ namespace WinForms.Library
         }
 
         public event EventHandler IsDirtyChanged;
+        public event EventHandler ClearingValues;
         public event LoadValuesHandler<TDocument> LoadingValues;
 
         public bool IsDirty
@@ -50,6 +51,7 @@ namespace WinForms.Library
         {
             _suspend = true;
             foreach (var action in _clearControls) action.Invoke();
+            ClearingValues?.Invoke(this, new EventArgs());
             _suspend = false;
             IsDirty = false;
         }
