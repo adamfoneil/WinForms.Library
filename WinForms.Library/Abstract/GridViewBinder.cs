@@ -7,6 +7,8 @@ using System.Windows.Forms;
 
 namespace WinForms.Library.Abstract
 {
+    public delegate void GridViewActionHandler<TModel>(TModel model);
+
     public abstract class GridViewBinder<TModel> where TModel : class, new()
     {
         private readonly DataGridView _dataGridView;
@@ -24,6 +26,9 @@ namespace WinForms.Library.Abstract
             _dataGridView.UserDeletedRow += RowDeleted;
             _dataGridView.RowValidating += RowValidating;
         }
+
+        public event GridViewActionHandler<TModel> ModelSaved;
+        public event GridViewActionHandler<TModel> ModelDeleted;
 
         private void RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -82,6 +87,8 @@ namespace WinForms.Library.Abstract
                     {
                         OnSave(_model);
                     }
+                    ModelSaved?.Invoke(_model);
+
                     _dataGridView.Rows[e.RowIndex].ErrorText = null;
                 }
                 catch (Exception exc)
@@ -116,7 +123,8 @@ namespace WinForms.Library.Abstract
                     else
                     {
                         OnDelete(_model);
-                    }                    
+                    }
+                    ModelDeleted?.Invoke(_model);
                 }
                 catch (Exception exc)
                 {
