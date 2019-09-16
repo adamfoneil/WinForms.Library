@@ -8,6 +8,7 @@ using System.Windows.Forms;
 namespace WinForms.Library.Abstract
 {
     public delegate void GridViewActionHandler<TModel>(TModel model);
+    public delegate void GridViewActionExceptionHandler<TModel>(TModel model, Exception exception);
 
     public abstract class GridViewBinder<TModel> where TModel : class, new()
     {
@@ -29,6 +30,8 @@ namespace WinForms.Library.Abstract
 
         public event GridViewActionHandler<TModel> ModelSaved;
         public event GridViewActionHandler<TModel> ModelDeleted;
+        public event GridViewActionExceptionHandler<TModel> ModelSaveException;
+        public event GridViewActionExceptionHandler<TModel> ModelDeleteException;
 
         private void RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -94,6 +97,7 @@ namespace WinForms.Library.Abstract
                 catch (Exception exc)
                 {
                     _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
+                    ModelSaveException?.Invoke(_model, exc);
                 }
                     
                 _model = null;                
@@ -127,8 +131,12 @@ namespace WinForms.Library.Abstract
                     ModelDeleted?.Invoke(_model);
                 }
                 catch (Exception exc)
-                {
-                    MessageBox.Show($"Error deleting record: " + exc.Message);
+                {                    
+                    ModelDeleteException?.Invoke(_model, exc);
+                    if (ModelDeleteException == null)
+                    {
+                        MessageBox.Show($"Error deleting record: " + exc.Message);
+                    }                    
                 }
                 
                 _model = null;
