@@ -16,11 +16,12 @@ namespace WinForms.Library.Abstract
 
         private TModel _model = null;
         private bool _modified = false;
+        private int _rowIndex = -1;
 
         public GridViewBinder(DataGridView dataGridView)
         {
             _dataGridView = dataGridView;
-            _dataGridView.AutoGenerateColumns = false;
+            _dataGridView.AutoGenerateColumns = false;            
             _dataGridView.CurrentCellDirtyStateChanged += CellDirtyStateChanged;
             _dataGridView.RowValidated += RowValidated;
             _dataGridView.UserDeletingRow += RowDeleting;
@@ -78,8 +79,8 @@ namespace WinForms.Library.Abstract
 
         private async void RowValidated(object sender, DataGridViewCellEventArgs e)
         {
-            if (_modified && _model != null)
-            {                
+            if (_modified && _model != null && _rowIndex == e.RowIndex)
+            {
                 try
                 {
                     if (SupportsAsync)
@@ -90,18 +91,18 @@ namespace WinForms.Library.Abstract
                     {
                         OnSave(_model);
                     }
+                    
                     ModelSaved?.Invoke(_model);
-
                     _dataGridView.Rows[e.RowIndex].ErrorText = null;
+                    _modified = false;
                 }
                 catch (Exception exc)
                 {
                     _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
                     ModelSaveException?.Invoke(_model, exc);
                 }
-                    
-                _model = null;                
-                _modified = false;
+                
+                _model = null;                                
             }
         }
 
@@ -109,6 +110,7 @@ namespace WinForms.Library.Abstract
         {
             if (_dataGridView.IsCurrentCellDirty)
             {
+                _rowIndex = _dataGridView.CurrentCell.RowIndex;
                 _modified = true;
                 _model = _dataGridView.CurrentRow.DataBoundItem as TModel;
             }
