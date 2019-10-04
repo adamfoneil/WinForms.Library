@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
@@ -113,6 +114,20 @@ namespace WinForms.SampleApp
                 string type = FileSystem.GetFileType(dlg.FileName);
                 string size = FileSystem.GetFileSize(dlg.FileName);
                 MessageBox.Show(type + " - " + size);
+            }
+        }
+
+        private void builderTextBox2_BuilderClicked(object sender, Library.Controls.BuilderEventArgs e)
+        {
+            if (builderTextBox2.SelectFolder(e))
+            {
+                listView1.BeginUpdate();
+                FileSystem.EnumFiles(e.Result, "*", directoryFound: (di) =>
+                {
+                    listView1.Items.Add(di.FullName);
+                    return (listView1.Items.Count < 100) ? EnumFileResult.Continue : EnumFileResult.Stop;
+                });
+                listView1.EndUpdate();
             }
         }
     }

@@ -42,6 +42,8 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.btnFileType = new System.Windows.Forms.ToolStripButton();
+            this.tbToolStrip = new System.Windows.Forms.ToolStripTextBox();
+            this.cbToolStrip = new System.Windows.Forms.ToolStripComboBox();
             this.cbBelt = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -57,8 +59,7 @@
             this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbKeyedItem = new System.Windows.Forms.ComboBox();
-            this.tbToolStrip = new System.Windows.Forms.ToolStripTextBox();
-            this.cbToolStrip = new System.Windows.Forms.ToolStripComboBox();
+            this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -176,6 +177,17 @@
             this.btnFileType.Size = new System.Drawing.Size(23, 22);
             this.btnFileType.Text = "Get File Type";
             this.btnFileType.Click += new System.EventHandler(this.BtnFileType_Click);
+            // 
+            // tbToolStrip
+            // 
+            this.tbToolStrip.Name = "tbToolStrip";
+            this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
+            // 
+            // cbToolStrip
+            // 
+            this.cbToolStrip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbToolStrip.Name = "cbToolStrip";
+            this.cbToolStrip.Size = new System.Drawing.Size(121, 25);
             // 
             // cbBelt
             // 
@@ -313,22 +325,23 @@
             this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
             this.cbKeyedItem.TabIndex = 18;
             // 
-            // tbToolStrip
+            // builderTextBox2
             // 
-            this.tbToolStrip.Name = "tbToolStrip";
-            this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
-            // 
-            // cbToolStrip
-            // 
-            this.cbToolStrip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbToolStrip.Name = "cbToolStrip";
-            this.cbToolStrip.Size = new System.Drawing.Size(121, 25);
+            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.builderTextBox2.Location = new System.Drawing.Point(119, 316);
+            this.builderTextBox2.Name = "builderTextBox2";
+            this.builderTextBox2.Size = new System.Drawing.Size(250, 26);
+            this.builderTextBox2.Suggestions = null;
+            this.builderTextBox2.TabIndex = 19;
+            this.builderTextBox2.Value = "";
+            this.builderTextBox2.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.builderTextBox2_BuilderClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 370);
+            this.Controls.Add(this.builderTextBox2);
             this.Controls.Add(this.cbKeyedItem);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.bldPath);
@@ -392,6 +405,7 @@
         private System.Windows.Forms.ToolStripButton btnFileType;
         private System.Windows.Forms.ToolStripTextBox tbToolStrip;
         private System.Windows.Forms.ToolStripComboBox cbToolStrip;
+        private Library.Controls.BuilderTextBox builderTextBox2;
     }
 }
 

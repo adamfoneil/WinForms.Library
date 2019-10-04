@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
@@ -172,21 +173,6 @@ namespace WinForms.Library
             longValue = longValue | fileTime.dwLowDateTime;
 
             return DateTime.FromFileTime(longValue);
-        }
-
-        public class FileSearchResult
-        {
-            public string FullPath { get; set; }
-            public string BaseName { get; set; }
-            public string Name { get; set; }
-            public string Extension { get; set; }
-            public DateTime LastModified { get; set; }
-            public long Length { get; set; }
-
-            public override string ToString()
-            {
-                return $"{BaseName} - {Length} - {LastModified}";
-            }
         }
     }
 }

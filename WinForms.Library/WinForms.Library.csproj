@@ -68,10 +68,12 @@
     </Compile>
     <Compile Include="Extensions\DataGridViewExtensions.cs" />
     <Compile Include="Extensions\ToolStripComboBoxExtensions.cs" />
+    <Compile Include="FileSystem_DotNetSearch.cs" />
     <Compile Include="FileSystem_Icons.cs" />
-    <Compile Include="FileSystem_Search.cs" />
+    <Compile Include="FileSystem_Win32Search.cs" />
     <Compile Include="FileSystem_Shell.cs" />
     <Compile Include="GridCellAutoComplete.cs" />
+    <Compile Include="Models\FileSearchResult.cs" />
     <Compile Include="Models\FormPosition.cs" />
     <Compile Include="JsonSDI.cs" />
     <Compile Include="ControlBinder.cs" />
