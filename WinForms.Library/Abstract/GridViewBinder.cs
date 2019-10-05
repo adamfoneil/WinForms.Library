@@ -32,8 +32,7 @@ namespace WinForms.Library.Abstract
         public event GridViewActionHandler<TModel> ModelSaved;
         public event GridViewActionHandler<TModel> ModelDeleted;
         public event GridViewActionExceptionHandler<TModel> ModelSaveException;
-        public event GridViewActionExceptionHandler<TModel> ModelDeleteException;
-        public event DataGridViewRowCancelEventHandler UserDeletingRow;
+        public event GridViewActionExceptionHandler<TModel> ModelDeleteException;        
 
         private void RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -77,6 +76,8 @@ namespace WinForms.Library.Abstract
 
         protected abstract Task OnSaveAsync(TModel model);
         protected abstract Task OnDeleteAsync(TModel model);
+
+        protected virtual bool DeleteCancelPrompt(TModel model) { return false; }
 
         private async void RowValidated(object sender, DataGridViewCellEventArgs e)
         {
@@ -149,7 +150,7 @@ namespace WinForms.Library.Abstract
         private void RowDeleting(object sender, DataGridViewRowCancelEventArgs e)
         {
             _model = e.Row.DataBoundItem as TModel;
-            UserDeletingRow?.Invoke(sender, e);            
+            if (DeleteCancelPrompt(_model)) e.Cancel = true;            
         }
     }
 }
