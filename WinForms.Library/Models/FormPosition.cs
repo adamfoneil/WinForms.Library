@@ -36,15 +36,27 @@ namespace WinForms.Library.Models
                 }
                 else
                 {
-                    form.WindowState = FormWindowState.Normal;
-                    form.Location = Location;
-                    form.Size = Size;
+                    if (IsValid())
+                    {
+                        form.WindowState = FormWindowState.Normal;
+                        form.Location = Location;
+                        form.Size = Size;
+                    }
                 }
             }
             finally
             {
                 form.ResumeLayout();
             }
+        }
+
+        /// <summary>
+        /// Sometimes, form locations get set to weird negative locations that cause forms to load off screen,
+        /// so I'm trying to prevent that here.
+        /// </summary>        
+        private bool IsValid()
+        {            
+            return Location.X > 0 && Location.Y > 0 && Size.Width > 100 && Size.Height > 100;
         }
 
         /// <summary>
