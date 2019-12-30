@@ -16,6 +16,7 @@ namespace WinForms.SampleApp
         public Form1()
         {
             InitializeComponent();
+            dataGridView1.AutoGenerateColumns = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -129,6 +130,24 @@ namespace WinForms.SampleApp
                 });
                 listView1.EndUpdate();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var items = new SampleItem[]
+            {
+                new SampleItem() { FirstName = "Yoda", LastName = "Manginold", BirthDate = DateTime.Today },
+                new SampleItem() { FirstName = "Jimminy", LastName = "Hambone", BirthDate = DateTime.Today.AddDays(-720) },
+                new SampleItem() { FirstName = "Orzo", LastName = "Oopsiedaisey", BirthDate = DateTime.Today.AddDays(-1000) }
+            };
+
+            dataGridView1.Fill(items);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var items = dataGridView1.GetItems<SampleItem>();
+            MessageBox.Show(string.Join("\r\n", items.Select(item => $"{item.FirstName} {item.LastName} {item.BirthDate}")));
         }
     }
 }

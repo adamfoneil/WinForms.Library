@@ -55,14 +55,21 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revealInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
-            this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbKeyedItem = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
+            this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
+            this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tbFirstName
@@ -180,6 +187,7 @@
             // 
             // tbToolStrip
             // 
+            this.tbToolStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbToolStrip.Name = "tbToolStrip";
             this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
             // 
@@ -247,9 +255,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(396, 60);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(439, 297);
+            this.listView1.Size = new System.Drawing.Size(439, 282);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 15;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -284,6 +293,85 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 274);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Keyed Item:";
+            // 
+            // cbKeyedItem
+            // 
+            this.cbKeyedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbKeyedItem.FormattingEnabled = true;
+            this.cbKeyedItem.Location = new System.Drawing.Point(85, 271);
+            this.cbKeyedItem.Name = "cbKeyedItem";
+            this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
+            this.cbKeyedItem.TabIndex = 18;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colFirstName,
+            this.colLastName,
+            this.colBirthDate});
+            this.dataGridView1.Location = new System.Drawing.Point(396, 391);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(439, 93);
+            this.dataGridView1.TabIndex = 20;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(262, 391);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 23);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Fill DataGridView";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(262, 420);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(117, 23);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "GetItems";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // colFirstName
+            // 
+            this.colFirstName.DataPropertyName = "FirstName";
+            this.colFirstName.HeaderText = "First Name";
+            this.colFirstName.Name = "colFirstName";
+            // 
+            // colLastName
+            // 
+            this.colLastName.DataPropertyName = "LastName";
+            this.colLastName.HeaderText = "Last Name";
+            this.colLastName.Name = "colLastName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.DataPropertyName = "BirthDate";
+            this.colBirthDate.HeaderText = "Birth Date";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // builderTextBox2
+            // 
+            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.builderTextBox2.Location = new System.Drawing.Point(119, 316);
+            this.builderTextBox2.Name = "builderTextBox2";
+            this.builderTextBox2.Size = new System.Drawing.Size(250, 26);
+            this.builderTextBox2.Suggestions = null;
+            this.builderTextBox2.TabIndex = 19;
+            this.builderTextBox2.Value = "";
+            this.builderTextBox2.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.builderTextBox2_BuilderClicked);
+            // 
             // bldPath
             // 
             this.bldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -307,40 +395,14 @@
             this.builderTextBox1.TabIndex = 8;
             this.builderTextBox1.Value = "";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 274);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Keyed Item:";
-            // 
-            // cbKeyedItem
-            // 
-            this.cbKeyedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbKeyedItem.FormattingEnabled = true;
-            this.cbKeyedItem.Location = new System.Drawing.Point(85, 271);
-            this.cbKeyedItem.Name = "cbKeyedItem";
-            this.cbKeyedItem.Size = new System.Drawing.Size(230, 21);
-            this.cbKeyedItem.TabIndex = 18;
-            // 
-            // builderTextBox2
-            // 
-            this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.builderTextBox2.Location = new System.Drawing.Point(119, 316);
-            this.builderTextBox2.Name = "builderTextBox2";
-            this.builderTextBox2.Size = new System.Drawing.Size(250, 26);
-            this.builderTextBox2.Suggestions = null;
-            this.builderTextBox2.TabIndex = 19;
-            this.builderTextBox2.Value = "";
-            this.builderTextBox2.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.builderTextBox2_BuilderClicked);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 370);
+            this.ClientSize = new System.Drawing.Size(847, 512);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.builderTextBox2);
             this.Controls.Add(this.cbKeyedItem);
             this.Controls.Add(this.label7);
@@ -369,6 +431,7 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -406,6 +469,12 @@
         private System.Windows.Forms.ToolStripTextBox tbToolStrip;
         private System.Windows.Forms.ToolStripComboBox cbToolStrip;
         private Library.Controls.BuilderTextBox builderTextBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFirstName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLastName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library.Models;
@@ -41,6 +42,20 @@ namespace WinForms.Library.Extensions
                 comboBox.Items.Add(new ListItem<TEnum>(e, names[index]));
                 index++;
             });
+        }
+
+        public static void Fill<T>(this DataGridView dataGridView, IEnumerable<T> items)
+        {
+            var list = new BindingList<T>(items.ToList());
+            BindingSource bs = new BindingSource();
+            bs.DataSource = list;
+            dataGridView.DataSource = bs;
+        }
+
+        public static IEnumerable<T> GetItems<T>(this DataGridView dataGridView)
+        {
+            var list = (dataGridView.DataSource as BindingSource).DataSource as BindingList<T>;
+            return list;
         }
     }
 }
