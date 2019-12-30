@@ -149,5 +149,15 @@ namespace WinForms.SampleApp
             var items = dataGridView1.GetItems<SampleItem>();
             MessageBox.Show(string.Join("\r\n", items.Select(item => $"{item.FirstName} {item.LastName} {item.BirthDate}")));
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Fill<SampleItem>(null);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(PathUtil.EnvironmentPath(Environment.SpecialFolder.LocalApplicationData, "this", "that", "hello.json"));
+        }
     }
 }

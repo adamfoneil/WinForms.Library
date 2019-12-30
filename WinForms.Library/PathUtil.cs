@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static System.Environment;
 
 namespace WinForms.Library
 {
@@ -103,6 +104,16 @@ namespace WinForms.Library
         private static string EnsureStartsWith(string input, string mustStartsWith)
         {
             return (!input.StartsWith(mustStartsWith)) ? mustStartsWith + input : input;
+        }
+
+        public static string EnvironmentPath(SpecialFolder specialFolder, params string[] parts)
+        {
+            var allParts = new string[]
+            {
+                GetFolderPath(specialFolder)
+            }.Concat(parts).ToArray();
+
+            return Path.Combine(allParts);
         }
 
         internal class FileItem
