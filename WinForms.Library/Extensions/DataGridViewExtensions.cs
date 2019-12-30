@@ -46,9 +46,7 @@ namespace WinForms.Library.Extensions
 
         public static void Fill<T>(this DataGridView dataGridView, IEnumerable<T> items)
         {
-            if (items == null) return;
-
-            var list = new BindingList<T>(items.ToList());
+            var list = new BindingList<T>((items ?? Enumerable.Empty<T>()).ToList());
             BindingSource bs = new BindingSource();
             bs.DataSource = list;
             dataGridView.DataSource = bs;
