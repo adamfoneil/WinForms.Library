@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 using WinForms.Library.Extensions;
+using WinForms.Library.Extensions.ComboBoxes;
+using WinForms.Library.Extensions.ToolStrip;
 using WinForms.Library.Interfaces;
 using WinForms.Library.Models;
 

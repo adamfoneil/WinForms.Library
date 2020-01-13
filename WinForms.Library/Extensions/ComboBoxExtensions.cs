@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library.Models;
 
-namespace WinForms.Library.Extensions
+namespace WinForms.Library.Extensions.ComboBoxes
 {
     public static class ComboBoxExtensions
     {
