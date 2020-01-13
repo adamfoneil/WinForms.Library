@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WinForms.Library;
 using WinForms.Library.Extensions;
+using WinForms.Library.Extensions.ToolStrip;
 using WinForms.SampleApp.Models;
 
 namespace WinForms.SampleApp
