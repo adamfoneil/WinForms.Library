@@ -42,19 +42,26 @@ namespace WinForms.Library
                     {
                         foreach (var subFolder in folderNames)
                         {
-                            if (directoryFound != null)
-                            {
-                                var di = new DirectoryInfo(subFolder);
-                                var result = directoryFound.Invoke(di);
-                                if (result == EnumFileResult.NextFolder) continue;
-                                if (result == EnumFileResult.Stop) return;
-                            }
-
-                            EnumFiles(subFolder, searchPattern, directoryFound, fileFound);
+                            EnumFiles(subFolder, searchPattern, null, fileFound);
                         }
                     }
                 }
-            }                        
+            }
+
+            if (directoryFound != null)
+            {
+                if (TryGetDirectories(path, out IEnumerable<string> folderNames))
+                {
+                    foreach (var dir in folderNames)
+                    {
+                        var di = new DirectoryInfo(dir);
+                        var result = directoryFound.Invoke(di);
+                        if (result == EnumFileResult.NextFolder) continue;
+                        if (result == EnumFileResult.Stop) return;
+                        EnumFiles(dir, searchPattern, directoryFound, null);
+                    }
+                }
+            }
         }
 
         private static bool TryGetFiles(string path, string pattern, out IEnumerable<string> fileNames)
