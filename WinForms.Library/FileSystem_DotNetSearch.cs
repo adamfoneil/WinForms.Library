@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace WinForms.Library
 {
@@ -23,7 +22,7 @@ namespace WinForms.Library
     }
 
     public static partial class FileSystem
-    {
+    {        
         public static void EnumFiles(string path, string searchPattern, Func<DirectoryInfo, EnumFileResult> directoryFound = null, Func<FileInfo, EnumFileResult> fileFound = null)
         {
             if (fileFound != null)
@@ -37,17 +36,17 @@ namespace WinForms.Library
                         if (result == EnumFileResult.NextFolder) break;
                         if (result == EnumFileResult.Stop) return;
                     }
+                }
 
-                    if (TryGetDirectories(path, out IEnumerable<string> folderNames))
+                if (TryGetDirectories(path, out IEnumerable<string> folderNames))
+                {
+                    foreach (var subFolder in folderNames)
                     {
-                        foreach (var subFolder in folderNames)
-                        {
-                            EnumFiles(subFolder, searchPattern, null, fileFound);
-                        }
+                        EnumFiles(subFolder, searchPattern, null, fileFound);
                     }
                 }
             }
-
+            
             if (directoryFound != null)
             {
                 if (TryGetDirectories(path, out IEnumerable<string> folderNames))
