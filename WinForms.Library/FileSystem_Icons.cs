@@ -93,7 +93,7 @@ namespace WinForms.Library
         {
             if (!string.IsNullOrEmpty(folderIconKey) && Directory.Exists(path)) return folderIconKey;
 
-            string ext = Path.GetExtension(path);            
+            string ext = Path.GetExtension(path);
             if (imageList.Images.ContainsKey(ext)) return ext;
 
             var icon = GetIcon(path, size);

@@ -21,7 +21,7 @@ namespace WinForms.Library.Abstract
         public GridViewBinder(DataGridView dataGridView)
         {
             _dataGridView = dataGridView;
-            _dataGridView.AutoGenerateColumns = false;            
+            _dataGridView.AutoGenerateColumns = false;
             _dataGridView.CurrentCellDirtyStateChanged += CellDirtyStateChanged;
             _dataGridView.RowValidated += RowValidated;
             _dataGridView.UserDeletingRow += RowDeleting;
@@ -32,7 +32,7 @@ namespace WinForms.Library.Abstract
         public event GridViewActionHandler<TModel> ModelSaved;
         public event GridViewActionHandler<TModel> ModelDeleted;
         public event GridViewActionExceptionHandler<TModel> ModelSaveException;
-        public event GridViewActionExceptionHandler<TModel> ModelDeleteException;        
+        public event GridViewActionExceptionHandler<TModel> ModelDeleteException;
 
         private void RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -93,7 +93,7 @@ namespace WinForms.Library.Abstract
                     {
                         OnSave(_model);
                     }
-                    
+
                     ModelSaved?.Invoke(_model);
                     _dataGridView.Rows[e.RowIndex].ErrorText = null;
                     _modified = false;
@@ -103,8 +103,8 @@ namespace WinForms.Library.Abstract
                     _dataGridView.Rows[e.RowIndex].ErrorText = exc.Message;
                     ModelSaveException?.Invoke(_model, exc);
                 }
-                
-                _model = null;                                
+
+                _model = null;
             }
         }
 
@@ -135,14 +135,14 @@ namespace WinForms.Library.Abstract
                     ModelDeleted?.Invoke(_model);
                 }
                 catch (Exception exc)
-                {                    
+                {
                     ModelDeleteException?.Invoke(_model, exc);
                     if (ModelDeleteException == null)
                     {
                         MessageBox.Show($"Error deleting record: " + exc.Message);
-                    }                    
+                    }
                 }
-                
+
                 _model = null;
             }
         }
@@ -150,7 +150,7 @@ namespace WinForms.Library.Abstract
         private void RowDeleting(object sender, DataGridViewRowCancelEventArgs e)
         {
             _model = e.Row.DataBoundItem as TModel;
-            if (DeleteCancelPrompt(_model)) e.Cancel = true;            
+            if (DeleteCancelPrompt(_model)) e.Cancel = true;
         }
     }
 }

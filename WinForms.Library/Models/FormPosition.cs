@@ -55,7 +55,7 @@ namespace WinForms.Library.Models
         /// so I'm trying to prevent that here.
         /// </summary>        
         private bool IsValid()
-        {            
+        {
             return Location.X > 0 && Location.Y > 0 && Size.Width > 100 && Size.Height > 100;
         }
 

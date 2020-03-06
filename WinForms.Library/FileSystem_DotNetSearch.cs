@@ -22,7 +22,7 @@ namespace WinForms.Library
     }
 
     public static partial class FileSystem
-    {        
+    {
         public static void EnumFiles(string path, string searchPattern, Func<DirectoryInfo, EnumFileResult> directoryFound = null, Func<FileInfo, EnumFileResult> fileFound = null)
         {
             if (fileFound != null)
@@ -46,7 +46,7 @@ namespace WinForms.Library
                     }
                 }
             }
-            
+
             if (directoryFound != null)
             {
                 if (TryGetDirectories(path, out IEnumerable<string> folderNames))
@@ -70,7 +70,7 @@ namespace WinForms.Library
                 fileNames = Directory.GetFiles(path, pattern);
                 return true;
             }
-            catch 
+            catch
             {
                 fileNames = Enumerable.Empty<string>();
                 return false;
@@ -84,11 +84,11 @@ namespace WinForms.Library
                 folderNames = Directory.GetDirectories(path);
                 return true;
             }
-            catch 
+            catch
             {
                 folderNames = Enumerable.Empty<string>();
                 return false;
             }
-        }        
+        }
     }
 }

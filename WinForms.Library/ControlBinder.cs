@@ -361,7 +361,7 @@ namespace WinForms.Library
 
         public void AddItems<TItem>(ToolStripComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
         {
-            ToolStripComboBoxExtensions.Fill(control, items);            
+            ToolStripComboBoxExtensions.Fill(control, items);
 
             _clearControls.Add(() => control.SelectedIndex = -1);
             _setControls.Add(setControl);
@@ -385,7 +385,7 @@ namespace WinForms.Library
             var func = property.Compile();
             Action<TDocument> setControl = (doc) =>
             {
-                ToolStripComboBoxExtensions.SetItem(control, func.Invoke(doc));                
+                ToolStripComboBoxExtensions.SetItem(control, func.Invoke(doc));
             };
 
             AddItems(control, setProperty, setControl, items);
