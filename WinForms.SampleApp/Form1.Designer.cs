@@ -63,11 +63,12 @@
             this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.dropDownButton1 = new WinForms.Library.Controls.DropDownButton();
             this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
             this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
             this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -273,19 +274,19 @@
             this.openToolStripMenuItem,
             this.revealInFileExplorerToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(188, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(189, 48);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // revealInFileExplorerToolStripMenuItem
             // 
             this.revealInFileExplorerToolStripMenuItem.Name = "revealInFileExplorerToolStripMenuItem";
-            this.revealInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.revealInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.revealInFileExplorerToolStripMenuItem.Text = "Reveal in File Explorer";
             this.revealInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.revealInFileExplorerToolStripMenuItem_Click);
             // 
@@ -363,6 +364,36 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(262, 420);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(117, 23);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(39, 390);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 24;
+            this.button4.Text = "env path";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // dropDownButton1
+            // 
+            this.dropDownButton1.ContextMenuStrip = this.contextMenuStrip1;
+            this.dropDownButton1.Location = new System.Drawing.Point(54, 461);
+            this.dropDownButton1.Name = "dropDownButton1";
+            this.dropDownButton1.Size = new System.Drawing.Size(108, 23);
+            this.dropDownButton1.TabIndex = 25;
+            this.dropDownButton1.Text = "menu button   ";
+            this.dropDownButton1.UseVisualStyleBackColor = true;
+            // 
             // builderTextBox2
             // 
             this.builderTextBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -397,31 +428,12 @@
             this.builderTextBox1.TabIndex = 8;
             this.builderTextBox1.Value = "";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(262, 420);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(117, 23);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(39, 390);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 24;
-            this.button4.Text = "env path";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 512);
+            this.Controls.Add(this.dropDownButton1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -501,6 +513,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private Library.Controls.DropDownButton dropDownButton1;
     }
 }
 

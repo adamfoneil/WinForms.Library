@@ -60,6 +60,9 @@
     <Compile Include="Controls\BuilderTextBox.designer.cs">
       <DependentUpon>BuilderTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DropDownButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OpenFileButton.cs">
       <SubType>Component</SubType>
     </Compile>
