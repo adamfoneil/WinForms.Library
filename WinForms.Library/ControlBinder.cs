@@ -10,7 +10,7 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
-    public delegate void LoadValuesHandler<TDocument>(object sender, TDocument document);
+    //public delegate void LoadValuesHandler<TDocument>(object sender, TDocument document);
 
     public class ControlBinder<TDocument>
     {
@@ -33,7 +33,7 @@ namespace WinForms.Library
         public event EventHandler IsDirtyChanged;
         public event EventHandler ClearingValues;
         public event EventHandler<TDocument> DocumentUpdated;
-        public event LoadValuesHandler<TDocument> LoadingValues;
+        public event EventHandler<TDocument> LoadingValues;
 
         public bool IsDirty
         {
