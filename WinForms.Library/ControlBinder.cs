@@ -32,6 +32,7 @@ namespace WinForms.Library
 
         public event EventHandler IsDirtyChanged;
         public event EventHandler ClearingValues;
+        public event EventHandler<TDocument> DocumentUpdated;
         public event LoadValuesHandler<TDocument> LoadingValues;
 
         public bool IsDirty
@@ -84,7 +85,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Text);
+                SetValue(pi, doc, control.Text);                
             };
 
             var func = property.Compile();
@@ -117,7 +118,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Checked);
+                SetValue(pi, doc, control.Checked);                
             };
 
             var func = property.Compile();
@@ -153,7 +154,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);
+                SetValue(pi, doc, (control.SelectedItem as ListItem<TEnum>).Value);                
             };
 
             var func = property.Compile();
@@ -170,7 +171,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));
+                SetValue(pi, doc, (control.SelectedItem as TItem));                
             };
 
             var func = property.Compile();
@@ -206,7 +207,7 @@ namespace WinForms.Library
             Action<TDocument> setProperty = (doc) =>
             {
                 var reverseDictionary = itemDictionary.ToDictionary(kp => kp.Value, kp => kp.Key);
-                pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);
+                SetValue(pi, doc, reverseDictionary[control.GetItem<TItem>()]);                
             };
 
             var func = property.Compile();
@@ -240,7 +241,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Value);
+                SetValue(pi, doc, control.Value);                
             };
 
             var func = property.Compile();
@@ -377,7 +378,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));
+                SetValue(pi, doc, (control.SelectedItem as TItem));                
             };
 
             var func = property.Compile();
@@ -423,6 +424,11 @@ namespace WinForms.Library
             return me.Member.Name;
         }
 
+        private void SetValue(PropertyInfo pi, TDocument doc, object value)
+        {
+            pi.SetValue(doc, value);
+            DocumentUpdated?.Invoke(this, doc);
+        }
         #endregion support methods
     }
 }
