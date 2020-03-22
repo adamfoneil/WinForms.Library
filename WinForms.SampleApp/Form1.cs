@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -38,6 +39,12 @@ namespace WinForms.SampleApp
                 (doc) => doc.DocumentItemValue = ToolStripComboBoxExtensions.GetItem<DocumentItem>(cbToolStrip).Value,
                 (doc) => cbToolStrip.SelectedItem = AppDocument.SelectableItems.SingleOrDefault(item => item.Value == doc.DocumentItemValue),
                 AppDocument.SelectableItems);
+
+            _docManager.Controls.DocumentUpdated += delegate (object sender2, AppDocument document)
+            {
+                string json = JsonConvert.SerializeObject(document, Formatting.Indented);
+                MessageBox.Show(json);
+            };
         }
 
         private async void btnNew_Click(object sender, EventArgs e)
