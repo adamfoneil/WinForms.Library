@@ -37,14 +37,18 @@ namespace WinForms.SampleApp
 
             _docManager.Controls.Add(tbToolStrip, doc => doc.ToolStripText);
             _docManager.Controls.AddItems(cbToolStrip, 
-                (doc) => doc.DocumentItemValue = ToolStripComboBoxExtensions.GetItem<DocumentItem>(cbToolStrip).Value,
+                (doc) => 
+                {
+                    doc.DocumentItemValue = ToolStripComboBoxExtensions.GetItem<DocumentItem>(cbToolStrip).Value;
+                    return nameof(AppDocument.DocumentItemValue);
+                },
                 (doc) => cbToolStrip.SelectedItem = AppDocument.SelectableItems.SingleOrDefault(item => item.Value == doc.DocumentItemValue),
                 AppDocument.SelectableItems);
 
-            _docManager.Controls.DocumentUpdated += delegate (object sender2, AppDocument document)
+            _docManager.Controls.PropertyUpdated += delegate (object sender2, AppDocument document, string propertyName)
             {
                 string json = JsonConvert.SerializeObject(document, Formatting.Indented);
-                MessageBox.Show(json);
+                MessageBox.Show(json, propertyName);
             };
         }
 

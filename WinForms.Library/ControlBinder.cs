@@ -12,6 +12,8 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
+    public delegate void PropertyUpdatedHandler<T>(object sender, T document, string propertyName);
+
     public class ControlBinder<TDocument>
     {
         private TDocument _document;
@@ -33,7 +35,7 @@ namespace WinForms.Library
 
         public event EventHandler IsDirtyChanged;
         public event EventHandler ClearingValues;
-        public event EventHandler<TDocument> DocumentUpdated;
+        public event PropertyUpdatedHandler<TDocument> PropertyUpdated;
         public event EventHandler<TDocument> LoadingValues;
 
         public bool IsDirty
@@ -69,14 +71,16 @@ namespace WinForms.Library
 
         #region TextBox
 
-        public void Add(TextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add(TextBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
+
+            string propertyName = null;
 
             control.TextChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
                 _textChanged[control] = true;
             };
@@ -85,7 +89,7 @@ namespace WinForms.Library
             {
                 if (_textChanged[control])
                 {
-                    DocumentUpdated?.Invoke(this, Document);
+                    PropertyUpdated?.Invoke(this, Document, propertyName);
                     _textChanged[control] = false;
                 }
             };
@@ -94,9 +98,10 @@ namespace WinForms.Library
         public void Add(TextBox control, Expression<Func<TDocument, object>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Text);                
+                pi.SetValue(doc, control.Text);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -112,25 +117,26 @@ namespace WinForms.Library
 
         #region CheckBox
 
-        public void Add(CheckBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add(CheckBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
             control.CheckedChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void Add(CheckBox control, Expression<Func<TDocument, bool>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Checked);                
+                pi.SetValue(doc, control.Checked);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -146,7 +152,7 @@ namespace WinForms.Library
 
         #region ComboBox
 
-        public void AddEnum<TEnum>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void AddEnum<TEnum>(ComboBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             control.Fill<TEnum>();
 
@@ -156,18 +162,19 @@ namespace WinForms.Library
             control.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void AddEnum<TEnum>(ComboBox control, Expression<Func<TDocument, TEnum>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);                
+                pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -182,9 +189,10 @@ namespace WinForms.Library
         public void AddItems<TItem>(ComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));                
+                pi.SetValue(doc, (control.SelectedItem as TItem));
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -196,7 +204,7 @@ namespace WinForms.Library
             AddItems(control, setProperty, setControl, items);
         }
 
-        public void AddItems<TItem>(ComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+        public void AddItems<TItem>(ComboBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
         {
             control.Fill(items);
 
@@ -206,9 +214,9 @@ namespace WinForms.Library
             control.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
@@ -218,10 +226,11 @@ namespace WinForms.Library
         public void AddItems<TValue, TItem>(ComboBox control, Expression<Func<TDocument, TValue>> property, Dictionary<TValue, TItem> itemDictionary) where TItem : class
         {
             var pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
                 var reverseDictionary = itemDictionary.ToDictionary(kp => kp.Value, kp => kp.Key);
-                pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);                
+                pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -238,25 +247,26 @@ namespace WinForms.Library
 
         #region DateTimePicker
 
-        public void Add(DateTimePicker control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add(DateTimePicker control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
             control.ValueChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void Add(DateTimePicker control, Expression<Func<TDocument, DateTime>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Value);                
+                pi.SetValue(doc, control.Value);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -274,25 +284,26 @@ namespace WinForms.Library
 
         #region NumericUpDown
 
-        public void Add(NumericUpDown control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add(NumericUpDown control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
             control.ValueChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void Add(NumericUpDown control, Expression<Func<TDocument, decimal>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
                 pi.SetValue(doc, control.Value);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -308,25 +319,26 @@ namespace WinForms.Library
 
         #region IBoundControl
 
-        public void Add<TValue>(IBoundControl<TValue> control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add<TValue>(IBoundControl<TValue> control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
             control.ValueChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void Add<TValue>(IBoundControl<TValue> control, Expression<Func<TDocument, TValue>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
                 pi.SetValue(doc, control.Value);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -342,25 +354,26 @@ namespace WinForms.Library
 
         #region ToolStripTextBox
 
-        public void Add(ToolStripTextBox control, Action<TDocument> setProperty, Action<TDocument> setControl)
+        public void Add(ToolStripTextBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
             control.TextChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void Add(ToolStripTextBox control, Expression<Func<TDocument, object>> property)
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
                 pi.SetValue(doc, control.Text);
+                return pi.Name;
             };
 
             var func = property.Compile();
@@ -376,7 +389,7 @@ namespace WinForms.Library
 
         #region ToolStripComboBox
 
-        public void AddItems<TItem>(ToolStripComboBox control, Action<TDocument> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
+        public void AddItems<TItem>(ToolStripComboBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl, IEnumerable<TItem> items)
         {
             ToolStripComboBoxExtensions.Fill(control, items);
 
@@ -386,18 +399,19 @@ namespace WinForms.Library
             control.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
                 if (_suspend) return;
-                setProperty.Invoke(Document);
+                var propertyName = setProperty.Invoke(Document);
                 IsDirty = true;
-                DocumentUpdated?.Invoke(this, Document);
+                PropertyUpdated?.Invoke(this, Document, propertyName);
             };
         }
 
         public void AddItems<TItem>(ToolStripComboBox control, Expression<Func<TDocument, TItem>> property, IEnumerable<TItem> items) where TItem : class
         {
             PropertyInfo pi = GetProperty(property);
-            Action<TDocument> setProperty = (doc) =>
+            Func<TDocument, string> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));                
+                pi.SetValue(doc, (control.SelectedItem as TItem));
+                return pi.Name;
             };
 
             var func = property.Compile();
