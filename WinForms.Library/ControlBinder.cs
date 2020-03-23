@@ -12,8 +12,6 @@ using WinForms.Library.Models;
 
 namespace WinForms.Library
 {
-    public delegate void LoadValuesHandler<TDocument>(object sender, TDocument document);
-
     public class ControlBinder<TDocument>
     {
         private TDocument _document;
@@ -21,6 +19,7 @@ namespace WinForms.Library
         private bool _suspend = false;
         private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
         private List<Action> _clearControls = new List<Action>();
+        private Dictionary<Control, bool> _textChanged = new Dictionary<Control, bool>();
 
         public TDocument Document
         {
@@ -34,7 +33,8 @@ namespace WinForms.Library
 
         public event EventHandler IsDirtyChanged;
         public event EventHandler ClearingValues;
-        public event LoadValuesHandler<TDocument> LoadingValues;
+        public event EventHandler<TDocument> DocumentUpdated;
+        public event EventHandler<TDocument> LoadingValues;
 
         public bool IsDirty
         {
@@ -78,6 +78,16 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                _textChanged[control] = true;
+            };
+
+            control.Leave += delegate (object sender, EventArgs e)
+            {
+                if (_textChanged[control])
+                {
+                    DocumentUpdated?.Invoke(this, Document);
+                    _textChanged[control] = false;
+                }
             };
         }
 
@@ -86,7 +96,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Text);
+                pi.SetValue(doc, control.Text);                
             };
 
             var func = property.Compile();
@@ -111,6 +121,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -119,7 +130,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Checked);
+                pi.SetValue(doc, control.Checked);                
             };
 
             var func = property.Compile();
@@ -147,6 +158,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -155,7 +167,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);
+                pi.SetValue(doc, (control.SelectedItem as ListItem<TEnum>).Value);                
             };
 
             var func = property.Compile();
@@ -172,7 +184,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));
+                pi.SetValue(doc, (control.SelectedItem as TItem));                
             };
 
             var func = property.Compile();
@@ -196,6 +208,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -208,7 +221,7 @@ namespace WinForms.Library
             Action<TDocument> setProperty = (doc) =>
             {
                 var reverseDictionary = itemDictionary.ToDictionary(kp => kp.Value, kp => kp.Key);
-                pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);
+                pi.SetValue(doc, reverseDictionary[control.GetItem<TItem>()]);                
             };
 
             var func = property.Compile();
@@ -234,6 +247,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -242,7 +256,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, control.Value);
+                pi.SetValue(doc, control.Value);                
             };
 
             var func = property.Compile();
@@ -269,6 +283,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -302,6 +317,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -335,6 +351,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -371,6 +388,7 @@ namespace WinForms.Library
                 if (_suspend) return;
                 setProperty.Invoke(Document);
                 IsDirty = true;
+                DocumentUpdated?.Invoke(this, Document);
             };
         }
 
@@ -379,7 +397,7 @@ namespace WinForms.Library
             PropertyInfo pi = GetProperty(property);
             Action<TDocument> setProperty = (doc) =>
             {
-                pi.SetValue(doc, (control.SelectedItem as TItem));
+                pi.SetValue(doc, (control.SelectedItem as TItem));                
             };
 
             var func = property.Compile();
@@ -424,7 +442,6 @@ namespace WinForms.Library
 
             return me.Member.Name;
         }
-
         #endregion support methods
     }
 }
