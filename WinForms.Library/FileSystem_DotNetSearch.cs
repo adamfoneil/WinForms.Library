@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WinForms.Library
 {
@@ -61,6 +62,22 @@ namespace WinForms.Library
                     }
                 }
             }
+        }
+
+        public static async Task<IEnumerable<FileInfo>> FindFilesAsync(string path, string searchPattern, Func<FileInfo, bool> filter = null)
+        {
+            List<FileInfo> results = new List<FileInfo>();
+
+            await Task.Run(() =>
+            {
+                EnumFiles(path, searchPattern, fileFound: (fi) =>
+                {
+                    if (filter?.Invoke(fi) ?? true) results.Add(fi);
+                    return EnumFileResult.Continue;
+                });
+            });
+
+            return results;
         }
 
         private static bool TryGetFiles(string path, string pattern, out IEnumerable<string> fileNames)

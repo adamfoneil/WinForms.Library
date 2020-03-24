@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>AO.FileSystem</PackageId>
+    <Authors>Adam O'Neil</Authors>
+    <Product>Adam O'Neil</Product>
+    <Description>A FileSystem.EnumFiles static method for enumerating local files. Subset of WinForms.Library without WinForm dependency</Description>
+    <Copyright>Copyright (c) Adam O'Neil 2020</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/adamosoftware/WinForms.Library</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamosoftware/WinForms.Library</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>added FileSystem.FindFilesAsync</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\WinForms.Library\FileSystem_DotNetSearch.cs" Link="FileSystem_DotNetSearch.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
