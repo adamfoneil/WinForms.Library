@@ -87,7 +87,7 @@ namespace WinForms.Library
 
             control.Leave += delegate (object sender, EventArgs e)
             {
-                if (_textChanged[control])
+                if (_textChanged.ContainsKey(control) && _textChanged[control])
                 {
                     PropertyUpdated?.Invoke(this, Document, propertyName);
                     _textChanged[control] = false;
