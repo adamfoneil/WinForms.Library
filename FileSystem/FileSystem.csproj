@@ -11,8 +11,8 @@
     <PackageProjectUrl>https://github.com/adamosoftware/WinForms.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/WinForms.Library</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>added FileSystem.FindFilesAsync</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>added FileSystem.FindFolders(Async)</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

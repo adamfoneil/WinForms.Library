@@ -107,5 +107,44 @@ namespace WinForms.Library
                 return false;
             }
         }
+
+        public static IEnumerable<string> FindFolders(string rootPath, string query, int minPartLength = 3)
+        {
+            string[] parts = query
+                .Split(new char[] { ' ', '/', '\\' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => part.ToLower().Trim())
+                .Where(part => part.Length >= minPartLength)
+                .ToArray();
+
+            if (!parts.Any()) return Enumerable.Empty<string>();
+
+            List<string> results = new List<string>();
+            addFolders(rootPath);
+
+            return results
+                .Where(path => parts.Any(part => path.ToLower().Contains(part)))
+                .ToArray();
+
+            void addFolders(string searchPath)
+            {
+                if (TryGetDirectories(searchPath, out IEnumerable<string> folders))
+                {
+                    results.AddRange(folders);
+                    foreach (var folder in folders) addFolders(folder);
+                }
+            }            
+        }
+
+        public static async Task<IEnumerable<string>> FindFoldersAsync(string rootPath, string query, int minPartLength = 3)
+        {
+            IEnumerable<string> results = null;
+            
+            await Task.Run(() =>
+            {
+                results = FindFolders(rootPath, query, minPartLength);
+            });
+
+            return results;
+        }
     }
 }
