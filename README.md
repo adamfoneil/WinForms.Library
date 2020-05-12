@@ -1,4 +1,4 @@
-[![Nuget](https://img.shields.io/nuget/v/WinForms.Library)](https://www.nuget.org/packages/WinForms.Library/)
+[![Nuget](https://img.shields.io/nuget/v/WinForms.Library?label=WinForms.Library)](https://www.nuget.org/packages/WinForms.Library/) [![Nuget](https://img.shields.io/nuget/v/AO.FileSystem?label=AO.FileSystem)](https://www.nuget.org/packages/AO.FileSystem/)
 
 This is a collection of helpers and data binding utillities for WinForms development. Please see the [Wiki](https://github.com/adamosoftware/WinForms.Library/wiki) for latest info.
 
