@@ -27,7 +27,9 @@ namespace Testing
         {
             //var results = FileSystem.FindFolders(@"C:\Users\Adam\SkyDrive", "ferry");
 
-            var results = FileSystem.FindFolders(@"C:\Users\Adam\Source", "license");
+            var results = FileSystem.FindFolders(@"C:\Users\Adam\OneDrive", "ferry");
+
+            //var results = FileSystem.FindFolders(@"C:\Users\Adam\Source", "license");
         }
     }
 }

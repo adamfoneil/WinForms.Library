@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WinForms.Library
@@ -108,40 +109,50 @@ namespace WinForms.Library
             }
         }
 
-        public static IEnumerable<string> FindFolders(string rootPath, string query, int minPartLength = 3)
+        public static IEnumerable<string> FindFolders(string rootPath, string query, int minQueryLength = 3, int maxResults = 0, IProgress<string> progress = null, CancellationTokenSource cancellationTokenSource = null)
         {
-            string[] parts = query
+            string[] queryParts = query
                 .Split(new char[] { ' ', '/', '\\' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(part => part.ToLower().Trim())
-                .Where(part => part.Length >= minPartLength)
+                .Where(part => part.Length >= minQueryLength)
                 .ToArray();
 
-            if (!parts.Any()) return Enumerable.Empty<string>();
+            if (!queryParts.Any()) return Enumerable.Empty<string>();
 
             List<string> results = new List<string>();
             addFolders(rootPath);
 
             return results
-                .Where(path => parts.Any(part => path.ToLower().Contains(part)))
+                .Where(path => queryParts.All(part => path.ToLower().Contains(part)))
                 .ToArray();
 
             void addFolders(string searchPath)
             {
+                progress?.Report(searchPath);
+                if (cancellationTokenSource?.IsCancellationRequested ?? false) return;
+
                 if (TryGetDirectories(searchPath, out IEnumerable<string> folders))
                 {
-                    results.AddRange(folders);
+                    results.AddRange(folders);                    
+
+                    if (maxResults > 0 && results.Count > maxResults)
+                    {
+                        results = results.Take(maxResults).ToList();
+                        return;
+                    }
+
                     foreach (var folder in folders) addFolders(folder);
                 }
             }            
         }
 
-        public static async Task<IEnumerable<string>> FindFoldersAsync(string rootPath, string query, int minPartLength = 3)
+        public static async Task<IEnumerable<string>> FindFoldersAsync(string rootPath, string query, int minQueryLength = 3, int maxResults = 0, IProgress<string> progress = null, CancellationTokenSource cancellationTokenSource = null)
         {
             IEnumerable<string> results = null;
             
             await Task.Run(() =>
             {
-                results = FindFolders(rootPath, query, minPartLength);
+                results = FindFolders(rootPath, query, minQueryLength, maxResults, progress, cancellationTokenSource);
             });
 
             return results;
