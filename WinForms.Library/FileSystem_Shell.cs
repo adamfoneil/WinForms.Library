@@ -30,7 +30,7 @@ namespace WinForms.Library
         }
 
         /// <summary>
-        /// Returns a file size as human-readable strong
+        /// Returns a file size as human-readable string
         /// Thanks to https://stackoverflow.com/a/281716/2023653
         /// </summary>
         public static string GetFileSize(long filesize)
