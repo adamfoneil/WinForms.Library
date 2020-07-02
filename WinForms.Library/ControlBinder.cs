@@ -23,6 +23,15 @@ namespace WinForms.Library
         private List<Action> _clearControls = new List<Action>();
         private Dictionary<Control, bool> _textChanged = new Dictionary<Control, bool>();
 
+        public ControlBinder()
+        {
+        }
+
+        public ControlBinder(TDocument document)
+        {
+            Document = document;
+        }
+
         public TDocument Document
         {
             get { return _document; }
