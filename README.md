@@ -4,13 +4,15 @@ This is a collection of helpers and data binding utillities for WinForms develop
 
 There's also a separate Nuget package **AO.FileSystem** that removes the WinForms dependency, and provides several file search methods:
 
-# WinForms.Library.FileSystem [FileSystem_DotNetSearch.cs](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs)
+# WinForms.Library.FileSystem [FileSystem_DotNetSearch.cs](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L26)
 ## Methods
-- void [EnumFiles](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L28)
- (string path, string searchPattern, [ Func<DirectoryInfo, EnumFileResult> directoryFound ], [ Func<FileInfo, EnumFileResult> fileFound ])
-- Task\<IEnumerable\<FileInfo\>\> [FindFilesAsync](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L68)
+- void [EnumFiles](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L28)
+ (string path, string searchPattern, Func<FileInfo, EnumFileResult> fileFound)
+- void [EnumDirectories](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L50)
+ (string path, [ Func<DirectoryInfo, EnumFileResult> traversingDown ], [ Func<DirectoryInfo, EnumFileResult> traversingUp ])
+- Task\<IEnumerable\<FileInfo\>\> [FindFilesAsync](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L71)
  (string path, string searchPattern, [ Func<FileInfo, bool> filter ])
-- IEnumerable\<string\> [FindFolders](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L112)
+- IEnumerable\<string\> [FindFolders](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L115)
  (string rootPath, string query, [ int minQueryLength ], [ int maxResults ], [ IProgress<string> progress ], [ CancellationTokenSource cancellationTokenSource ])
-- Task\<IEnumerable\<string\>\> [FindFoldersAsync](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L149)
+- Task\<IEnumerable\<string\>\> [FindFoldersAsync](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L152)
  (string rootPath, string query, [ int minQueryLength ], [ int maxResults ], [ IProgress<string> progress ], [ CancellationTokenSource cancellationTokenSource ])
