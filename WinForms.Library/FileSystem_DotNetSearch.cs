@@ -25,42 +25,45 @@ namespace WinForms.Library
 
     public static partial class FileSystem
     {
-        public static void EnumFiles(string path, string searchPattern, Func<DirectoryInfo, EnumFileResult> directoryFound = null, Func<FileInfo, EnumFileResult> fileFound = null)
+        public static void EnumFiles(string path, string searchPattern, Func<FileInfo, EnumFileResult> fileFound)
         {
-            if (fileFound != null)
+            if (TryGetFiles(path, searchPattern, out IEnumerable<string> fileNames))
             {
-                if (TryGetFiles(path, searchPattern, out IEnumerable<string> fileNames))
+                foreach (var file in fileNames)
                 {
-                    foreach (var file in fileNames)
-                    {
-                        var fi = new FileInfo(file);
-                        var result = fileFound.Invoke(fi);
-                        if (result == EnumFileResult.NextFolder) break;
-                        if (result == EnumFileResult.Stop) return;
-                    }
-                }
-
-                if (TryGetDirectories(path, out IEnumerable<string> folderNames))
-                {
-                    foreach (var subFolder in folderNames)
-                    {
-                        EnumFiles(subFolder, searchPattern, null, fileFound);
-                    }
+                    var fi = new FileInfo(file);
+                    var result = fileFound.Invoke(fi);
+                    if (result == EnumFileResult.NextFolder) break;
+                    if (result == EnumFileResult.Stop) return;
                 }
             }
 
-            if (directoryFound != null)
+            if (TryGetDirectories(path, out IEnumerable<string> folderNames))
             {
-                if (TryGetDirectories(path, out IEnumerable<string> folderNames))
+                foreach (var subFolder in folderNames)
                 {
-                    foreach (var dir in folderNames)
-                    {
-                        var di = new DirectoryInfo(dir);
-                        var result = directoryFound.Invoke(di);
-                        if (result == EnumFileResult.NextFolder) continue;
-                        if (result == EnumFileResult.Stop) return;
-                        EnumFiles(dir, searchPattern, directoryFound, null);
-                    }
+                    EnumFiles(subFolder, searchPattern, fileFound);
+                }
+            }
+        }
+
+        public static void EnumDirectories(string path, Func<DirectoryInfo, EnumFileResult> traversingDown = null, Func<DirectoryInfo, EnumFileResult> traversingUp = null)
+        {
+            if (TryGetDirectories(path, out IEnumerable<string> folderNames))
+            {
+                foreach (var dir in folderNames)
+                {
+                    var di = new DirectoryInfo(dir);
+
+                    var result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;
+                    if (result == EnumFileResult.NextFolder) continue;
+                    if (result == EnumFileResult.Stop) return;
+
+                    EnumDirectories(dir, traversingDown);
+
+                    result = traversingUp?.Invoke(di) ?? EnumFileResult.Continue;
+                    if (result == EnumFileResult.NextFolder) continue;
+                    if (result == EnumFileResult.Stop) return;
                 }
             }
         }

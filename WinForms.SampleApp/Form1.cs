@@ -135,7 +135,7 @@ namespace WinForms.SampleApp
             if (builderTextBox2.SelectFolder(e))
             {
                 listView1.BeginUpdate();
-                FileSystem.EnumFiles(e.Result, "*", directoryFound: (di) =>
+                FileSystem.EnumDirectories(e.Result, (di) =>
                 {
                     listView1.Items.Add(di.FullName);
                     return (listView1.Items.Count < 100) ? EnumFileResult.Continue : EnumFileResult.Stop;

@@ -11,8 +11,8 @@
     <PackageProjectUrl>https://github.com/adamosoftware/WinForms.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/WinForms.Library</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>improvements to FileSystem.FindFolders(Async)</PackageReleaseNotes>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>breaking change, added FileSystem.EnumDirectories, and changed the args of FileSystem.EnumFiles</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

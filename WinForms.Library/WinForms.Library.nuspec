@@ -6,12 +6,13 @@
     <title>WinForms.Library for Json documents</title>
     <authors>Adam O'Neil</authors>
     <owners>Adam O'Neil</owners>
-    <licenseUrl>https://github.com/adamosoftware/WinForms.Library/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/adamosoftware/WinForms.Library</projectUrl>    
+    <licenseUrl>https://github.com/adamfoneil/WinForms.Library/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/adamfoneil/WinForms.Library</projectUrl>    
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Control and data binding helpers for WinForm apps, along with a grab bag of some other controls and utilities</description>    
     <copyright>Copyright (c) Adam O'Neil 2020</copyright>
     <tags>winforms json filesearch icons</tags>
+    <releaseNotes>breaking change, added FileSystem.EnumDirectories, and changed the args of FileSystem.EnumFiles</releaseNotes>
 	<dependencies>
 		<dependency id="JsonSettings.Library" version="1.0.12"/>
 	</dependencies>
