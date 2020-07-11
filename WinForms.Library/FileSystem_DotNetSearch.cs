@@ -49,22 +49,31 @@ namespace WinForms.Library
 
         public static void EnumDirectories(string path, Func<DirectoryInfo, EnumFileResult> traversingDown = null, Func<DirectoryInfo, EnumFileResult> traversingUp = null)
         {
+            DirectoryInfo di = null;
+            EnumFileResult result = EnumFileResult.Continue;
+
             if (TryGetDirectories(path, out IEnumerable<string> folderNames))
             {
+                di = new DirectoryInfo(path);
+                result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;                
+                if (result == EnumFileResult.Stop) return;
+
                 foreach (var dir in folderNames)
                 {
-                    var di = new DirectoryInfo(dir);
+                    di = new DirectoryInfo(dir);
 
-                    var result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;
+                    result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;
                     if (result == EnumFileResult.NextFolder) continue;
                     if (result == EnumFileResult.Stop) return;
 
-                    EnumDirectories(dir, traversingDown);
+                    EnumDirectories(dir, traversingDown, traversingUp);
 
                     result = traversingUp?.Invoke(di) ?? EnumFileResult.Continue;
                     if (result == EnumFileResult.NextFolder) continue;
                     if (result == EnumFileResult.Stop) return;
                 }
+
+                traversingUp?.Invoke(di);
             }
         }
 
