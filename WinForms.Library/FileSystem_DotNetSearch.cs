@@ -47,34 +47,23 @@ namespace WinForms.Library
             }
         }
 
-        public static void EnumDirectories(string path, Func<DirectoryInfo, EnumFileResult> traversingDown = null, Func<DirectoryInfo, EnumFileResult> traversingUp = null)
+        public static void EnumDirectories(string path, Func<DirectoryInfo, EnumFileResult> starting = null, Func<DirectoryInfo, EnumFileResult> ending = null)
         {
-            DirectoryInfo di = null;
-            EnumFileResult result = EnumFileResult.Continue;
+            var di = new DirectoryInfo(path);
+
+            var result = starting?.Invoke(di) ?? EnumFileResult.Continue;            
+            if (result == EnumFileResult.Stop) return;
 
             if (TryGetDirectories(path, out IEnumerable<string> folderNames))
             {
-                di = new DirectoryInfo(path);
-                result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;                
-                if (result == EnumFileResult.Stop) return;
-
                 foreach (var dir in folderNames)
                 {
-                    di = new DirectoryInfo(dir);
-
-                    result = traversingDown?.Invoke(di) ?? EnumFileResult.Continue;
-                    if (result == EnumFileResult.NextFolder) continue;
-                    if (result == EnumFileResult.Stop) return;
-
-                    EnumDirectories(dir, traversingDown, traversingUp);
-
-                    result = traversingUp?.Invoke(di) ?? EnumFileResult.Continue;
-                    if (result == EnumFileResult.NextFolder) continue;
-                    if (result == EnumFileResult.Stop) return;
+                    EnumDirectories(dir, starting, ending);
                 }
-
-                traversingUp?.Invoke(di);
             }
+
+            result = ending?.Invoke(di) ?? EnumFileResult.Continue;            
+            if (result == EnumFileResult.Stop) return;
         }
 
         public static async Task<IEnumerable<FileInfo>> FindFilesAsync(string path, string searchPattern, Func<FileInfo, bool> filter = null)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using WinForms.Library;
 using WinForms.Library.Models;
@@ -30,6 +32,20 @@ namespace Testing
             var results = FileSystem.FindFolders(@"C:\Users\Adam\OneDrive", "ferry");
 
             //var results = FileSystem.FindFolders(@"C:\Users\Adam\Source", "license");
+        }
+
+        [TestMethod]
+        public void EnumDirectories()
+        {
+            FileSystem.EnumDirectories(@"C:\Users\Adam\SkyDrive\Pictures", (di) =>
+            {
+                Debug.Print($"going down: {di.FullName}");
+                return EnumFileResult.Continue;
+            }, (di) =>
+            {
+                Debug.Print($"going up: {di.FullName}");
+                return EnumFileResult.Continue;
+            });
         }
     }
 }
