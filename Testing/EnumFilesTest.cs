@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -46,6 +45,18 @@ namespace Testing
                 Debug.Print($"going up: {di.FullName}");
                 return EnumFileResult.Continue;
             });
+        }
+
+        [TestMethod]
+        public void FindNearestFiles()
+        {
+            var ratings = new List<string>();
+            FileSystem.EnumFiles(@"C:\Users\Adam\SkyDrive\Pictures", "ratings.json", (fi) =>
+            {
+                ratings.Add(fi.FullName);
+                return EnumFileResult.NextFolder;
+            });
+            Assert.IsTrue(ratings.Any());
         }
     }
 }
