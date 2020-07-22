@@ -30,5 +30,3 @@ There's also a separate Nuget package **AO.FileSystem** that removes the WinForm
  (string fileName, string newExtension)
 - string [EnvironmentPath](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L109)
  (SpecialFolder specialFolder, params string[] parts)
-- string [GetFilenameAtDepth](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L126)
- ()
