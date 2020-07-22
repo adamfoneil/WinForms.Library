@@ -20,7 +20,19 @@ namespace WinForms.Library
 
             int depth = 0;
 
-            bool AllFilesHaveSameFolderAtDepth(IEnumerable<string[]> files, int atDepth)
+            while (allFilesHaveSameFolderAtDepth(explodedFiles, depth))
+            {
+                depth++;
+            }
+
+            if (samePathReturnsParent && explodedFiles.All(folders => folders.Length == depth + 1))
+            {
+                depth--;
+            }
+
+            return string.Join(separator.ToString(), explodedFiles.First().Take(depth));
+
+            bool allFilesHaveSameFolderAtDepth(IEnumerable<string[]> files, int atDepth)
             {
                 try
                 {
@@ -32,18 +44,6 @@ namespace WinForms.Library
                     return false;
                 }
             }
-
-            while (AllFilesHaveSameFolderAtDepth(explodedFiles, depth))
-            {
-                depth++;
-            }
-
-            if (samePathReturnsParent && explodedFiles.All(folders => folders.Length == depth + 1))
-            {
-                depth--;
-            }
-
-            return string.Join(separator.ToString(), explodedFiles.First().Take(depth));
         }
 
         /// <summary>

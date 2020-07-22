@@ -11,12 +11,14 @@
     <PackageProjectUrl>https://github.com/adamosoftware/WinForms.Library</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/WinForms.Library</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.6</Version>
-    <PackageReleaseNotes>breaking change, added FileSystem.EnumDirectories, and changed the args of FileSystem.EnumFiles</PackageReleaseNotes>
+    <Version>1.0.7</Version>
+    <PackageReleaseNotes>added PathUtil static class -- with some handy file manipulation methods
+https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="..\WinForms.Library\FileSystem_DotNetSearch.cs" Link="FileSystem_DotNetSearch.cs" />
+    <Compile Include="..\WinForms.Library\PathUtil.cs" Link="PathUtil.cs" />
   </ItemGroup>
 
   <ItemGroup>
