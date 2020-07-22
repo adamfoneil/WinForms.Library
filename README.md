@@ -16,3 +16,19 @@ There's also a separate Nuget package **AO.FileSystem** that removes the WinForm
  (string rootPath, string query, [ int minQueryLength ], [ int maxResults ], [ IProgress<string> progress ], [ CancellationTokenSource cancellationTokenSource ])
 - Task\<IEnumerable\<string\>\> [FindFoldersAsync](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L150)
  (string rootPath, string query, [ int minQueryLength ], [ int maxResults ], [ IProgress<string> progress ], [ CancellationTokenSource cancellationTokenSource ])
+
+
+# WinForms.Library.PathUtil [PathUtil.cs](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs)
+## Methods
+- string [GetCommonPath](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L16)
+ (IEnumerable<string> fileNames, [ char separator ], [ bool samePathReturnsParent ])
+- Dictionary\<string, string\> [UniquifyFiles](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L52)
+ (IEnumerable<string> fileNames)
+- string [GetParentFolder](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L90)
+ (string path)
+- string [ReplaceExtension](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L97)
+ (string fileName, string newExtension)
+- string [EnvironmentPath](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L109)
+ (SpecialFolder specialFolder, params string[] parts)
+- string [GetFilenameAtDepth](https://github.com/adamfoneil/WinForms.Library/blob/master/WinForms.Library/PathUtil.cs#L126)
+ ()
