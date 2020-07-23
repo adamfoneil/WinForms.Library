@@ -34,14 +34,17 @@ namespace WinForms.Library.Extensions
             var names = Enum.GetNames(typeof(TEnum));
             var values = Enum.GetValues(typeof(TEnum)).OfType<TEnum>();
 
-            comboBox.Items.Clear();
-
+            var bindingList = new BindingList<ListItem<TEnum>>();
             int index = 0;
-            values.ToList().ForEach((e) =>
+            values.ToList().ForEach((value) =>
             {
-                comboBox.Items.Add(new ListItem<TEnum>(e, names[index]));
+                bindingList.Add(new ListItem<TEnum>(value, names[index]));
                 index++;
             });
+
+            comboBox.DataSource = bindingList;
+            comboBox.ValueMember = "Value";
+            comboBox.DisplayMember = "Text";
         }
 
         public static void Fill<T>(this DataGridView dataGridView, IEnumerable<T> items)
