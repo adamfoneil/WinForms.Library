@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -50,6 +51,8 @@ namespace WinForms.SampleApp
                 string json = JsonConvert.SerializeObject(document, Formatting.Indented);
                 MessageBox.Show(json, propertyName);
             };
+
+            colDataType.Fill<DbType>();
         }
 
         private async void btnNew_Click(object sender, EventArgs e)

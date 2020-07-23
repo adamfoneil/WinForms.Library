@@ -58,9 +58,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbKeyedItem = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -69,6 +66,10 @@
             this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
             this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
             this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
+            this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -190,7 +191,6 @@
             // 
             // tbToolStrip
             // 
-            this.tbToolStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbToolStrip.Name = "tbToolStrip";
             this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
             // 
@@ -320,29 +320,12 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colFirstName,
             this.colLastName,
-            this.colBirthDate});
+            this.colBirthDate,
+            this.colDataType});
             this.dataGridView1.Location = new System.Drawing.Point(396, 391);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(439, 93);
             this.dataGridView1.TabIndex = 20;
-            // 
-            // colFirstName
-            // 
-            this.colFirstName.DataPropertyName = "FirstName";
-            this.colFirstName.HeaderText = "First Name";
-            this.colFirstName.Name = "colFirstName";
-            // 
-            // colLastName
-            // 
-            this.colLastName.DataPropertyName = "LastName";
-            this.colLastName.HeaderText = "Last Name";
-            this.colLastName.Name = "colLastName";
-            // 
-            // colBirthDate
-            // 
-            this.colBirthDate.DataPropertyName = "BirthDate";
-            this.colBirthDate.HeaderText = "Birth Date";
-            this.colBirthDate.Name = "colBirthDate";
             // 
             // button1
             // 
@@ -428,6 +411,29 @@
             this.builderTextBox1.TabIndex = 8;
             this.builderTextBox1.Value = "";
             // 
+            // colFirstName
+            // 
+            this.colFirstName.DataPropertyName = "FirstName";
+            this.colFirstName.HeaderText = "First Name";
+            this.colFirstName.Name = "colFirstName";
+            // 
+            // colLastName
+            // 
+            this.colLastName.DataPropertyName = "LastName";
+            this.colLastName.HeaderText = "Last Name";
+            this.colLastName.Name = "colLastName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.DataPropertyName = "BirthDate";
+            this.colBirthDate.HeaderText = "Birth Date";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // colDataType
+            // 
+            this.colDataType.HeaderText = "Data Type";
+            this.colDataType.Name = "colDataType";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -508,12 +514,13 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFirstName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLastName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private Library.Controls.DropDownButton dropDownButton1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFirstName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLastName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colDataType;
     }
 }
 
