@@ -49,7 +49,7 @@ namespace WinForms.Library
         /// <summary>
         /// Converts a list of files to a dictionary where the key is unique portion of path and the value is the full path
         /// </summary>
-        public static Dictionary<string, string> UniquifyFiles(IEnumerable<string> fileNames)
+        public static Dictionary<string, string> UniquifyFiles(IEnumerable<string> fileNames, char separator = '\\')
         {
             // make sure we're starting with a unique list of files
             var uniqueFiles = fileNames.GroupBy(path => path).Select(grp => grp.Key).ToArray();
@@ -74,7 +74,7 @@ namespace WinForms.Library
                     {
                         var item = items[i];
                         results[item.Key].Depth++;
-                        results[item.Key].DisplayPath = item.Value.GetFilenameAtDepth();
+                        results[item.Key].DisplayPath = item.Value.GetFilenameAtDepth(separator);
                     }
                 }
 
@@ -123,10 +123,10 @@ namespace WinForms.Library
             public string FullPath { get; set; }
             public int Depth { get; set; }
 
-            public string GetFilenameAtDepth()
+            public string GetFilenameAtDepth(char separator = '\\')
             {
-                string[] folders = FullPath.Split('\\');
-                return string.Join("\\", folders.Skip(folders.Length - Depth - 1));
+                string[] folders = FullPath.Split(separator);
+                return string.Join(separator.ToString(), folders.Skip(folders.Length - Depth - 1));
             }
         }
     }
