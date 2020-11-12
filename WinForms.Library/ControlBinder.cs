@@ -80,7 +80,7 @@ namespace WinForms.Library
 
         #region TextBox
 
-        public void Add(TextBox control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
+        public void Add(TextBoxBase control, Func<TDocument, string> setProperty, Action<TDocument> setControl)
         {
             _setControls.Add(setControl);
 
@@ -104,7 +104,7 @@ namespace WinForms.Library
             };
         }
 
-        public void Add(TextBox control, Expression<Func<TDocument, object>> property)
+        public void Add(TextBoxBase control, Expression<Func<TDocument, object>> property)
         {
             PropertyInfo pi = GetProperty(property);
             Func<TDocument, string> setProperty = (doc) =>
