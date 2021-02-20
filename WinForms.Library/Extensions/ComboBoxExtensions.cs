@@ -38,6 +38,20 @@ namespace WinForms.Library.Extensions.ComboBoxes
             });
         }
 
+        public static void Set<TItem>(this ComboBox comboBox, Func<TItem, bool> set) where TItem : class
+        {
+            int index = 0;
+            foreach (var item in comboBox.Items)
+            {
+                if (set.Invoke(item as TItem))
+                {
+                    comboBox.SelectedIndex = index;
+                    return;
+                }
+                index++;
+            }
+        }
+
         public static void SetValue<T>(this ComboBox comboBox, T value)
         {
             int index = 0;
