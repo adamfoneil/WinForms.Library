@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -433,6 +434,27 @@ namespace WinForms.Library
         }
 
         #endregion
+
+        public BindingSource Add<TItem>(DataGridView dataGridView, IList<TItem> items)
+        {
+            var bs = new BindingSource();
+            bs.DataSource = new BindingList<TItem>(items);
+            dataGridView.DataSource = bs;
+
+            dataGridView.CellValueChanged += delegate (object sender, DataGridViewCellEventArgs args) { SetDirty(); };
+
+            DataGridViewRowEventHandler setIsDirty = delegate (object sender, DataGridViewRowEventArgs args) { SetDirty(); };
+            dataGridView.UserDeletedRow += setIsDirty;
+            dataGridView.UserAddedRow += setIsDirty;
+
+            return bs;
+
+            void SetDirty()
+            {
+                if (_suspend) return;
+                IsDirty = true;
+            }
+        }
 
         #region support methods
 
