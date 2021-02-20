@@ -58,6 +58,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbKeyedItem = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -66,10 +70,7 @@
             this.builderTextBox2 = new WinForms.Library.Controls.BuilderTextBox();
             this.bldPath = new WinForms.Library.Controls.BuilderTextBox();
             this.builderTextBox1 = new WinForms.Library.Controls.BuilderTextBox();
-            this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.button5 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -191,6 +192,7 @@
             // 
             // tbToolStrip
             // 
+            this.tbToolStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tbToolStrip.Name = "tbToolStrip";
             this.tbToolStrip.Size = new System.Drawing.Size(100, 25);
             // 
@@ -327,6 +329,29 @@
             this.dataGridView1.Size = new System.Drawing.Size(439, 93);
             this.dataGridView1.TabIndex = 20;
             // 
+            // colFirstName
+            // 
+            this.colFirstName.DataPropertyName = "FirstName";
+            this.colFirstName.HeaderText = "First Name";
+            this.colFirstName.Name = "colFirstName";
+            // 
+            // colLastName
+            // 
+            this.colLastName.DataPropertyName = "LastName";
+            this.colLastName.HeaderText = "Last Name";
+            this.colLastName.Name = "colLastName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.DataPropertyName = "BirthDate";
+            this.colBirthDate.HeaderText = "Birth Date";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // colDataType
+            // 
+            this.colDataType.HeaderText = "Data Type";
+            this.colDataType.Name = "colDataType";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(262, 391);
@@ -370,7 +395,7 @@
             // dropDownButton1
             // 
             this.dropDownButton1.ContextMenuStrip = this.contextMenuStrip1;
-            this.dropDownButton1.Location = new System.Drawing.Point(54, 461);
+            this.dropDownButton1.Location = new System.Drawing.Point(22, 429);
             this.dropDownButton1.Name = "dropDownButton1";
             this.dropDownButton1.Size = new System.Drawing.Size(108, 23);
             this.dropDownButton1.TabIndex = 25;
@@ -411,34 +436,22 @@
             this.builderTextBox1.TabIndex = 8;
             this.builderTextBox1.Value = "";
             // 
-            // colFirstName
+            // button5
             // 
-            this.colFirstName.DataPropertyName = "FirstName";
-            this.colFirstName.HeaderText = "First Name";
-            this.colFirstName.Name = "colFirstName";
-            // 
-            // colLastName
-            // 
-            this.colLastName.DataPropertyName = "LastName";
-            this.colLastName.HeaderText = "Last Name";
-            this.colLastName.Name = "colLastName";
-            // 
-            // colBirthDate
-            // 
-            this.colBirthDate.DataPropertyName = "BirthDate";
-            this.colBirthDate.HeaderText = "Birth Date";
-            this.colBirthDate.Name = "colBirthDate";
-            // 
-            // colDataType
-            // 
-            this.colDataType.HeaderText = "Data Type";
-            this.colDataType.Name = "colDataType";
+            this.button5.Location = new System.Drawing.Point(12, 472);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(87, 28);
+            this.button5.TabIndex = 26;
+            this.button5.Text = "DGV Binder";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 512);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.dropDownButton1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -521,6 +534,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLastName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
         private System.Windows.Forms.DataGridViewComboBoxColumn colDataType;
+        private System.Windows.Forms.Button button5;
     }
 }
 

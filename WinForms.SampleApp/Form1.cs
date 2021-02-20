@@ -174,5 +174,11 @@ namespace WinForms.SampleApp
         {
             MessageBox.Show(PathUtil.EnvironmentPath(Environment.SpecialFolder.LocalApplicationData, "this", "that", "hello.json"));
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            frmDataGridViewBinder frm = new frmDataGridViewBinder();
+            frm.Show();
+        }
     }
 }

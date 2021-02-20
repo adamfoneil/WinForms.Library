@@ -22,7 +22,7 @@ namespace WinForms.Library
         private bool _suspend = false;
         private List<Action<TDocument>> _setControls = new List<Action<TDocument>>();
         private List<Action> _clearControls = new List<Action>();
-        private Dictionary<Control, bool> _textChanged = new Dictionary<Control, bool>();
+        private Dictionary<Control, bool> _textChanged = new Dictionary<Control, bool>();        
 
         public ControlBinder()
         {
@@ -435,24 +435,39 @@ namespace WinForms.Library
 
         #endregion
 
-        public BindingSource Add<TItem>(DataGridView dataGridView, IList<TItem> items)
+        public BindingSource Add<TItem>(DataGridView dataGridView, Func<TDocument, IList<TItem>> items)
         {
-            var bs = new BindingSource();
-            bs.DataSource = new BindingList<TItem>(items);
-            dataGridView.DataSource = bs;
+            _setControls.Add((doc) => InitBinding());
+
+            _clearControls.Add(() =>
+            {
+                dataGridView.DataSource = null;
+                dataGridView.Enabled = false;
+            });
+
+            InitBinding();
 
             dataGridView.CellValueChanged += delegate (object sender, DataGridViewCellEventArgs args) { SetDirty(); };
-
             DataGridViewRowEventHandler setIsDirty = delegate (object sender, DataGridViewRowEventArgs args) { SetDirty(); };
             dataGridView.UserDeletedRow += setIsDirty;
             dataGridView.UserAddedRow += setIsDirty;
 
-            return bs;
+            return dataGridView.DataSource as BindingSource;
 
             void SetDirty()
             {
                 if (_suspend) return;
                 IsDirty = true;
+            }
+
+            void InitBinding()
+            {
+                dataGridView.Enabled = true;
+                var boundList = items.Invoke(_document);
+                if (!boundList?.Any() ?? true) boundList = Enumerable.Empty<TItem>().ToList();
+                var bs = new BindingSource();
+                bs.DataSource = new BindingList<TItem>(boundList);
+                dataGridView.DataSource = bs;                
             }
         }
 

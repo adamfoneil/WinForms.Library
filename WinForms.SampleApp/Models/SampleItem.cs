@@ -2,7 +2,7 @@
 
 namespace WinForms.SampleApp.Models
 {
-    internal class SampleItem
+    public class SampleItem
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
